@@ -1,0 +1,10 @@
+{
+  "organization": "Art of Living Foundation",
+  "website": "https://www.artofliving.org",
+  "contact_email": "info@artofliving.org",
+  "contact_phone": "+91-80-67262626",
+  "fallback_message": "Namaste! I don't have specific information about this query.",
+  "primary_domain": "artofliving.org",
+  "bot_name": "AOL Assistant",
+  "greeting_message": "Namaste! 🙏 I'm your AOL Assistant. How can I help you today?"
+}

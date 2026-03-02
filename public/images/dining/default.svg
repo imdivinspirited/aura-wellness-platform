@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f59e0b" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#d4af37" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <path d="M140 640 C360 460 560 740 820 590 C1080 440 1240 690 1460 520" stroke="url(#accent)" stroke-width="110" stroke-linecap="round" opacity="0.9"/>
+  <g fill="#e5e7eb" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">
+    <text x="90" y="140" font-size="34" font-weight="600" opacity="0.9">Dining</text>
+    <text x="90" y="190" font-size="20" opacity="0.75">Default image</text>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="yogaBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ecfdf3"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#yogaBg)"/>
+  <circle cx="800" cy="450" r="260" fill="#bbf7d0" opacity="0.8"/>
+  <text x="800" y="430" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont" font-size="56" fill="#166534">
+    Sri Sri Yoga
+  </text>
+  <text x="800" y="500" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont" font-size="22" fill="#15803d">
+    Temporary hero image · replace via public/images/programs/yoga/hero.svg
+  </text>
+</svg>

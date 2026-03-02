@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="corpBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E0F2F1"/>
+      <stop offset="1" stop-color="#B2DFDB"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#corpBg)"/>
+  <rect x="250" y="200" width="300" height="200" rx="20" fill="#4A9B9A" opacity="0.3"/>
+  <rect x="280" y="230" width="240" height="140" rx="10" fill="#4A9B9A" opacity="0.4"/>
+  <text x="400" y="520" text-anchor="middle" fill="#1B4B6F" font-family="Georgia" font-size="24" opacity="0.7">Corporate Programs</text>
+</svg>
