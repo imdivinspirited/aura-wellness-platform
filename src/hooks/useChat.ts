@@ -4,9 +4,7 @@
 
 import { useState, useCallback } from 'react';
 import {
-  postChat,
   getSessionId,
-  isBackendConfigured,
   type ChatMode,
   type DataSource,
 } from '@/lib/chat/backendChatApi';
@@ -74,48 +72,27 @@ export function useChat(conversationId?: string | null) {
       });
       setLoading(true);
 
-      const useBackend = isBackendConfigured();
-
       try {
-        if (useBackend) {
-          const resp = await postChat(text, mode, currentConversationId);
-          setCurrentConversationId(resp.conversation_id);
-          const assistantMsg: ChatMessage = {
-            id: `b-${Date.now()}`,
-            role: 'assistant',
-            content: resp.reply,
-            source: resp.source,
-            timestamp: Date.now(),
-            response_time_ms: resp.response_time_ms,
-            suggested_questions: resp.suggested_questions || [],
-          };
-          setMessages((prev) => {
-            const next = [...prev, assistantMsg];
-            saveSession(next);
-            return next;
-          });
-        } else {
-          const { answer, source } = await getAnswer(text, mode);
-          const assistantMsg: ChatMessage = {
-            id: `b-${Date.now()}`,
-            role: 'assistant',
-            content: answer,
-            source,
-            timestamp: Date.now(),
-          };
-          setMessages((prev) => {
-            const next = [...prev, assistantMsg];
-            saveSession(next);
-            return next;
-          });
-        }
-      } catch (e) {
-        const errMsg = e instanceof Error ? e.message : 'Failed to get response';
+        const { answer, source, suggested_questions } = await getAnswer(text, mode);
         const assistantMsg: ChatMessage = {
           id: `b-${Date.now()}`,
           role: 'assistant',
-          content: `⚠️ ${errMsg}`,
-          source: 'web',
+          content: answer,
+          source,
+          timestamp: Date.now(),
+          suggested_questions: suggested_questions || [],
+        };
+        setMessages((prev) => {
+          const next = [...prev, assistantMsg];
+          saveSession(next);
+          return next;
+        });
+      } catch (_e) {
+        const assistantMsg: ChatMessage = {
+          id: `b-${Date.now()}`,
+          role: 'assistant',
+          content: "Namaste 🙏 I'm having a brief moment of silence. Please try again.",
+          source: 'platform',
           timestamp: Date.now(),
         };
         setMessages((prev) => {
