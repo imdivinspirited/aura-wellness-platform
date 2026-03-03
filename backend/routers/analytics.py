@@ -13,7 +13,9 @@ def get_supabase() -> Optional[Client]:
     global _supabase
     if _supabase is None:
         url = os.environ.get("SUPABASE_URL")
-        key = os.environ.get("SUPABASE_KEY")
+        key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+        if not key:
+            raise ValueError("SUPABASE_SERVICE_ROLE_KEY must be set for backend access")
         if url and key:
             _supabase = create_client(url, key)
     return _supabase
