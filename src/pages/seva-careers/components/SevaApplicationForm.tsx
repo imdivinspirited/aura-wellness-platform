@@ -135,11 +135,8 @@ export function SevaApplicationForm({
 
     if (error) throw new Error(`Upload failed: ${error.message}`);
 
-    const { data: urlData } = supabase.storage
-      .from('applications')
-      .getPublicUrl(fileName);
-
-    return urlData.publicUrl;
+    // Store the file path only — bucket is now private, use signed URLs for access
+    return fileName;
   };
 
   const onSubmit = async (values: FormValues) => {

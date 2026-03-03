@@ -44,37 +44,24 @@ async function loadRootUsers(): Promise<RootUser[]> {
  * Password verification must NEVER happen on the frontend.
  */
 async function verifyPassword(username: string, password: string): Promise<{ valid: boolean; user?: RootUser }> {
-  // In production, this would be:
-  // const response = await fetch('/api/root/verify', {
-  //   method: 'POST',
-  //   credentials: 'include',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({ username, password }),
-  // });
-  // if (!response.ok) return { valid: false };
-  // const { user, token } = await response.json();
-  // return { valid: true, user };
+  try {
+    const response = await fetch('/api/root/verify', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
 
-  // For development, we'll use a simple check
-  // ⚠️ THIS IS NOT SECURE - MUST BE REPLACED WITH BACKEND API
-  console.warn('[Root Auth] Using development password verification. MUST use backend API in production.');
+    if (!response.ok) {
+      return { valid: false };
+    }
 
-  // Development placeholder: accept any non-empty password
-  // In production, this must be replaced with backend API that uses bcrypt.compare()
-  if (password.length > 0 && username.startsWith('rootadmin')) {
-    // Create a mock user for development
-    const mockUser: RootUser = {
-      id: `root_${username.replace('rootadmin', '')}` as RootUserId,
-      username,
-      passwordHash: '', // Not used in dev mode
-      status: 'active',
-      createdAt: new Date().toISOString(),
-      lastLogin: null,
-    };
-    return { valid: true, user: mockUser };
+    const { user } = await response.json();
+    return { valid: true, user };
+  } catch (error) {
+    console.error('[Root Auth] Backend verification failed:', error);
+    return { valid: false };
   }
-
-  return { valid: false };
 }
 
 /**

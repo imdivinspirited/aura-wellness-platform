@@ -14,8 +14,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const authRouter = Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
+
+if (!JWT_SECRET || !JWT_REFRESH_SECRET) {
+  throw new Error('CRITICAL: JWT_SECRET and JWT_REFRESH_SECRET environment variables must be set');
+}
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15m';
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
 
@@ -198,7 +202,7 @@ authRouter.post('/anonymous', async (req: Request, res: Response) => {
     }
 
     // Generate new anonymous ID
-    const newAnonymousId = `anon_${generateUUID()}_${Date.now()}`;
+    const newAnonymousId = `anon_${uuidv4()}_${Date.now()}`;
     const user = new User({
       anonymousId: newAnonymousId,
       name: 'Guest User',
