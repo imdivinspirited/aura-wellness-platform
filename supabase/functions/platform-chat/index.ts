@@ -244,7 +244,7 @@ serve(async (req) => {
       );
     }
 
-    const systemPrompt = \`You are the official AOL Assistant for the Art of Living website (artofliving.org). Your role:
+    const systemPrompt = `You are the official AOL Assistant for the Art of Living website (artofliving.org). Your role:
 
 1. Answer ONLY using the knowledge base provided below. Never invent programs, prices, schedules, or facts not in the knowledge base.
 2. Always provide direct, clickable links to relevant pages (use full URLs like https://www.artofliving.org/...).
@@ -258,12 +258,12 @@ serve(async (req) => {
 10. If user asks about applying for Seva/Jobs, direct them to: https://innerlight-system.lovable.app/seva-careers
 
 KNOWLEDGE BASE:
-\${AOL_KNOWLEDGE}\`;
+${AOL_KNOWLEDGE}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: \`Bearer \${LOVABLE_API_KEY}\`,
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
