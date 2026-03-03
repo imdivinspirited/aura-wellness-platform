@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      applications: {
+        Row: {
+          age: number | null
+          application_type: string
+          available_from: string | null
+          city: string
+          country: string
+          created_at: string
+          duration: string | null
+          education: string | null
+          email: string
+          full_name: string
+          gender: string | null
+          id: string
+          phone: string
+          photo_url: string | null
+          position: string
+          resume_url: string | null
+          sheets_synced: boolean
+          skills: string | null
+          state: string | null
+          status: string
+          whatsapp: string | null
+          why_join: string
+        }
+        Insert: {
+          age?: number | null
+          application_type: string
+          available_from?: string | null
+          city: string
+          country?: string
+          created_at?: string
+          duration?: string | null
+          education?: string | null
+          email: string
+          full_name: string
+          gender?: string | null
+          id?: string
+          phone: string
+          photo_url?: string | null
+          position: string
+          resume_url?: string | null
+          sheets_synced?: boolean
+          skills?: string | null
+          state?: string | null
+          status?: string
+          whatsapp?: string | null
+          why_join: string
+        }
+        Update: {
+          age?: number | null
+          application_type?: string
+          available_from?: string | null
+          city?: string
+          country?: string
+          created_at?: string
+          duration?: string | null
+          education?: string | null
+          email?: string
+          full_name?: string
+          gender?: string | null
+          id?: string
+          phone?: string
+          photo_url?: string | null
+          position?: string
+          resume_url?: string | null
+          sheets_synced?: boolean
+          skills?: string | null
+          state?: string | null
+          status?: string
+          whatsapp?: string | null
+          why_join?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
