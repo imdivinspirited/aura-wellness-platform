@@ -222,6 +222,17 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Origin validation
+  const origin = req.headers.get("origin");
+  const allowedOrigins = [
+    "https://innerlight-system.lovable.app",
+    "http://localhost:8080",
+    "http://localhost:5173",
+  ];
+  if (origin && !allowedOrigins.includes(origin)) {
+    return new Response("Forbidden", { status: 403, headers: corsHeaders });
+  }
+
   try {
     const { message } = await req.json();
     const text = typeof message === "string" ? message.trim() : "";
