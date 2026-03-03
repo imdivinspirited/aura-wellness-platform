@@ -62,15 +62,7 @@ alter table conversations enable row level security;
 alter table messages enable row level security;
 alter table analytics_events enable row level security;
 
--- Allow anonymous read/write for chatbot (use service role or anon with policies in production)
-create policy "Users can manage own row by session_id" on users
-  for all using (true);
-
-create policy "Conversations accessible by user" on conversations
-  for all using (true);
-
-create policy "Messages accessible by conversation" on messages
-  for all using (true);
-
-create policy "Analytics accessible" on analytics_events
-  for all using (true);
+-- Chatbot tables: access only via service role from edge functions.
+-- No anon/authenticated access policies — all operations go through
+-- the platform-chat edge function which uses the service role key.
+-- Default deny: RLS is enabled with no permissive policies.
