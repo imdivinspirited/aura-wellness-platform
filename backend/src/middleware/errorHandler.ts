@@ -18,18 +18,20 @@ export function errorHandler(
   next: NextFunction
 ): void {
   const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
+  const isProduction = process.env.NODE_ENV === 'production' || !process.env.NODE_ENV;
 
-  // Log error in development
-  if (process.env.NODE_ENV === 'development') {
-    console.error('Error:', err);
-  }
+  // Always log errors server-side
+  console.error('Error:', err);
+
+  // Never send stack traces to clients
+  const clientMessage = isProduction && statusCode === 500
+    ? 'Internal Server Error'
+    : err.message || 'Internal Server Error';
 
   res.status(statusCode).json({
     success: false,
     error: {
-      message,
-      ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+      message: clientMessage,
     },
   });
 }
