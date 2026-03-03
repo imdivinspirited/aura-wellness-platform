@@ -39,17 +39,20 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-            'ui-vendor': ['@radix-ui/react-select', '@radix-ui/react-dialog', '@radix-ui/react-accordion'],
-            'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
-            'utils-vendor': ['framer-motion', 'date-fns'],
-          },
-        },
-      },
       chunkSizeWarningLimit: 1000,
+    },
+    optimizeDeps: {
+      // Force pre-bundling of heavy deps to avoid 503 restart loops
+      include: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        '@supabase/supabase-js',
+        'framer-motion',
+        'zustand',
+        '@tanstack/react-query',
+        'fuse.js',
+      ],
     },
   };
 });
