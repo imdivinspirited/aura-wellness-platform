@@ -3,6 +3,9 @@ project_id = "wiodohcrgwvgncbvgokw"
 [functions.platform-chat]
 verify_jwt = false
 
+[functions.content-ingest]
+verify_jwt = false
+
 [functions.sync-to-sheets]
 verify_jwt = false
 

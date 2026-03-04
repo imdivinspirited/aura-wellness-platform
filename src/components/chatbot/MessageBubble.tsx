@@ -83,6 +83,9 @@ export function MessageBubble({
           ) : (
             <div className="prose prose-sm dark:prose-invert max-w-none pr-8">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+              {msg.isStreaming && (
+                <span className="inline-block h-4 w-1 animate-pulse bg-[#FF6B35] ml-0.5 align-text-bottom" />
+              )}
             </div>
           )}
         </div>

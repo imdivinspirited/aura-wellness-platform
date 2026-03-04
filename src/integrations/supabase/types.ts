@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      aol_content: {
+        Row: {
+          category: string | null
+          city: string | null
+          content_type: string
+          created_at: string
+          description: string
+          donation: string | null
+          eligibility: string | null
+          end_date: string | null
+          fetched_at: string
+          id: string
+          is_active: boolean
+          metadata: Json | null
+          raw_content: string
+          registration_link: string | null
+          search_vector: unknown
+          slug: string
+          source_url: string | null
+          start_date: string | null
+          summary: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          venue: string | null
+        }
+        Insert: {
+          category?: string | null
+          city?: string | null
+          content_type?: string
+          created_at?: string
+          description?: string
+          donation?: string | null
+          eligibility?: string | null
+          end_date?: string | null
+          fetched_at?: string
+          id?: string
+          is_active?: boolean
+          metadata?: Json | null
+          raw_content?: string
+          registration_link?: string | null
+          search_vector?: unknown
+          slug: string
+          source_url?: string | null
+          start_date?: string | null
+          summary?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          venue?: string | null
+        }
+        Update: {
+          category?: string | null
+          city?: string | null
+          content_type?: string
+          created_at?: string
+          description?: string
+          donation?: string | null
+          eligibility?: string | null
+          end_date?: string | null
+          fetched_at?: string
+          id?: string
+          is_active?: boolean
+          metadata?: Json | null
+          raw_content?: string
+          registration_link?: string | null
+          search_vector?: unknown
+          slug?: string
+          source_url?: string | null
+          start_date?: string | null
+          summary?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          venue?: string | null
+        }
+        Relationships: []
+      }
       applications: {
         Row: {
           age: number | null
@@ -94,7 +172,33 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      search_aol_content: {
+        Args: {
+          content_types?: string[]
+          only_upcoming?: boolean
+          result_limit?: number
+          search_query: string
+        }
+        Returns: {
+          category: string
+          city: string
+          content_type: string
+          description: string
+          donation: string
+          eligibility: string
+          end_date: string
+          id: string
+          metadata: Json
+          rank: number
+          registration_link: string
+          source_url: string
+          start_date: string
+          summary: string
+          tags: string[]
+          title: string
+          venue: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
