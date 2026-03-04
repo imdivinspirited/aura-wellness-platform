@@ -224,5 +224,7 @@ export async function initializeSearchWithData(): Promise<void> {
   const documents = await collectAllDocuments();
   initializeSearchEngine(documents);
 
-  console.log(`[Search] Indexed ${documents.length} documents for search`);
+  if (import.meta.env.DEV) {
+    console.log(`[Search] Indexed ${documents.length} documents for search`);
+  }
 }
