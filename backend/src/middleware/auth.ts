@@ -45,7 +45,7 @@ export async function authenticate(
 
     // Verify token
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    const user = await User.findById(decoded.userId).select('+password');
+    const user = await User.findById(decoded.userId);
 
     if (!user) {
       res.status(401).json({
