@@ -40,6 +40,16 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+            'ui-vendor': ['@radix-ui/react-select', '@radix-ui/react-dialog', '@radix-ui/react-accordion'],
+            'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
+            'utils-vendor': ['framer-motion', 'date-fns'],
+          },
+        },
+      },
     },
     optimizeDeps: {
       // Force pre-bundling of heavy deps to avoid 503 restart loops
