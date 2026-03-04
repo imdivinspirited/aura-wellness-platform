@@ -1,10 +1,19 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+const allowedOrigins = [
+  "https://innerlight-system.lovable.app",
+  "http://localhost:8080",
+  "http://localhost:5173",
+];
+
+function getCorsHeaders(origin: string | null) {
+  const resolvedOrigin = origin && allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+  return {
+    "Access-Control-Allow-Origin": resolvedOrigin,
+    "Access-Control-Allow-Headers":
+      "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+  };
+}
 
 const AOL_KNOWLEDGE = `
 # Art of Living Foundation — Complete Knowledge Base
@@ -218,19 +227,15 @@ const AOL_KNOWLEDGE = `
 `;
 
 serve(async (req) => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Origin validation
-  const origin = req.headers.get("origin") || "";
-  const allowedPatterns = [
-    "https://innerlight-system.lovable.app",
-    "http://localhost:8080",
-    "http://localhost:5173",
-  ];
-  const isAllowed = !origin || allowedPatterns.some(p => origin === p) || origin.endsWith(".lovable.app");
-  if (!isAllowed) {
+  // Strict origin validation
+  if (origin && !allowedOrigins.includes(origin)) {
     return new Response("Forbidden", { status: 403, headers: corsHeaders });
   }
 

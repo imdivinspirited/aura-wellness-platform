@@ -92,14 +92,11 @@ serve(async (req) => {
       );
     }
 
-    // Use subtle crypto for constant-time comparison of SHA-256 hashes
-    const encoder = new TextEncoder();
-    const passwordDigest = await crypto.subtle.digest("SHA-256", encoder.encode(password));
-    const passwordHex = Array.from(new Uint8Array(passwordDigest))
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
+    // Use bcrypt for secure password comparison
+    const { compare } = await import("https://deno.land/x/bcrypt@v0.4.1/mod.ts");
+    const isValid = await compare(password, adminPasswordHash);
 
-    if (passwordHex === adminPasswordHash) {
+    if (isValid) {
       rateLimitMap.delete(ip);
       return new Response(
         JSON.stringify({ adminId: "admin_verified" }),
