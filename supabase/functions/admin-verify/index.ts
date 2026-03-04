@@ -1,10 +1,19 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+const allowedOrigins = [
+  "https://innerlight-system.lovable.app",
+  "http://localhost:8080",
+  "http://localhost:5173",
+];
+
+function getCorsHeaders(origin: string | null) {
+  const resolvedOrigin = origin && allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+  return {
+    "Access-Control-Allow-Origin": resolvedOrigin,
+    "Access-Control-Allow-Headers":
+      "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+  };
+}
 
 // In-memory rate limiting (per-isolate)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -36,8 +45,16 @@ function recordFailedAttempt(ip: string): void {
 }
 
 serve(async (req) => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Origin validation
+  if (origin && !allowedOrigins.includes(origin)) {
+    return new Response("Forbidden", { status: 403, headers: corsHeaders });
   }
 
   if (req.method !== "POST") {
@@ -76,7 +93,6 @@ serve(async (req) => {
     }
 
     // Use subtle crypto for constant-time comparison of SHA-256 hashes
-    // The stored hash is a hex-encoded SHA-256 of the password
     const encoder = new TextEncoder();
     const passwordDigest = await crypto.subtle.digest("SHA-256", encoder.encode(password));
     const passwordHex = Array.from(new Uint8Array(passwordDigest))
@@ -84,7 +100,6 @@ serve(async (req) => {
       .join("");
 
     if (passwordHex === adminPasswordHash) {
-      // Clear rate limit on success
       rateLimitMap.delete(ip);
       return new Response(
         JSON.stringify({ adminId: "admin_verified" }),

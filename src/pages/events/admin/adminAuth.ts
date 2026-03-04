@@ -84,19 +84,11 @@ export async function verifyAdminPassword(password: string): Promise<string | nu
  * Log admin action for audit trail
  */
 export function logAdminAction(
-  adminId: string,
-  action: string,
-  eventId?: string,
-  details?: Record<string, unknown>
+  _adminId: string,
+  _action: string,
+  _eventId?: string,
+  _details?: Record<string, unknown>
 ): void {
-  const logEntry = {
-    timestamp: new Date().toISOString(),
-    adminId,
-    action,
-    eventId,
-    details,
-    userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'server',
-  };
-
-  console.log('[Admin Action]', logEntry);
+  // Audit logging is intentionally silent on the client.
+  // In production, this should send to a backend audit endpoint.
 }
