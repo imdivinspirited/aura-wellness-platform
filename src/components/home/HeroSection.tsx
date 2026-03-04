@@ -35,6 +35,7 @@ export const HeroSection = () => {
           alt="Art of Living Bangalore Ashram"
           className="h-full w-full object-cover"
           loading="eager"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
@@ -62,7 +63,7 @@ export const HeroSection = () => {
 
           {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 1, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
