@@ -24,16 +24,8 @@ const SESSION_DURATION = 60 * 60 * 1000; // 1 hour
  * For development, we use a placeholder that simulates the backend.
  */
 async function loadRootUsers(): Promise<RootUser[]> {
-  // In production, this would be:
-  // const response = await fetch('/api/root/users', {
-  //   credentials: 'include',
-  //   headers: { 'Authorization': `Bearer ${getSessionToken()}` }
-  // });
-  // return response.json();
-
-  // For development, return empty array (authentication will fail)
-  // This ensures we don't accidentally expose root users
-  console.warn('[Root Auth] Using development mode. Root users must be loaded from backend API in production.');
+  // Root users must be loaded from a backend API.
+  // Returns empty array — authentication will always fail without backend.
   return [];
 }
 
@@ -214,18 +206,12 @@ export function getCurrentRootUserId(): RootUserId | null {
 /**
  * Audit logging (placeholder - in production, this would be an API call)
  */
-async function logAuditAction(log: {
+async function logAuditAction(_log: {
   rootUserId: RootUserId;
   action: string;
   success: boolean;
   details?: Record<string, unknown>;
 }): Promise<void> {
-  // In production, this would be:
-  // await fetch('/api/root/audit', {
-  //   method: 'POST',
-  //   body: JSON.stringify(log),
-  // });
-
-  // For now, just log to console
-  console.log('[Root Audit]', log);
+  // Audit logging is intentionally silent on the client.
+  // In production, this should send to a backend audit endpoint.
 }
