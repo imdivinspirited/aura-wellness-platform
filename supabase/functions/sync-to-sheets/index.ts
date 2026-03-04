@@ -1,10 +1,46 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+const allowedOrigins = [
+  "https://innerlight-system.lovable.app",
+  "http://localhost:8080",
+  "http://localhost:5173",
+];
+
+function getCorsHeaders(origin: string | null) {
+  const resolvedOrigin = origin && allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+  return {
+    "Access-Control-Allow-Origin": resolvedOrigin,
+    "Access-Control-Allow-Headers":
+      "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+  };
+}
+
+/** Sanitize a string value to prevent formula injection in Google Sheets */
+function sanitizeForSheets(value: unknown): string {
+  if (value === null || value === undefined) return "";
+  const str = String(value).trim().slice(0, 500);
+  // Prefix with single quote if starts with formula-trigger characters
+  if (/^[=+\-@\t\r]/.test(str)) {
+    return "'" + str;
+  }
+  return str;
+}
+
+/** Validate email format */
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 255;
+}
+
+/** Validate URL is http/https only */
+function isValidUrl(url: string): boolean {
+  if (!url) return true; // optional field
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
 
 // Create JWT for Google Service Account auth
 async function createGoogleJWT(clientEmail: string, privateKeyPem: string): Promise<string> {
@@ -25,7 +61,6 @@ async function createGoogleJWT(clientEmail: string, privateKeyPem: string): Prom
   const payloadB64 = encode(payload);
   const signingInput = `${headerB64}.${payloadB64}`;
 
-  // Import the private key
   const pemBody = privateKeyPem
     .replace(/-----BEGIN PRIVATE KEY-----/g, "")
     .replace(/-----END PRIVATE KEY-----/g, "")
@@ -74,17 +109,14 @@ async function getAccessToken(clientEmail: string, privateKey: string): Promise<
 }
 
 serve(async (req) => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Origin validation
-  const origin = req.headers.get("origin");
-  const allowedOrigins = [
-    "https://innerlight-system.lovable.app",
-    "http://localhost:8080",
-    "http://localhost:5173",
-  ];
+  // Strict origin validation
   if (origin && !allowedOrigins.includes(origin)) {
     return new Response("Forbidden", { status: 403, headers: corsHeaders });
   }
@@ -95,6 +127,38 @@ serve(async (req) => {
       full_name, phone, email, position, city, state,
       resume_url, photo_url, created_at,
     } = body;
+
+    // Server-side input validation
+    if (!full_name || typeof full_name !== "string" || full_name.trim().length === 0) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Invalid name" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    if (!email || typeof email !== "string" || !isValidEmail(email)) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Invalid email" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    if (!position || typeof position !== "string") {
+      return new Response(
+        JSON.stringify({ success: false, error: "Invalid position" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    if (resume_url && !isValidUrl(resume_url)) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Invalid resume URL" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    if (photo_url && !isValidUrl(photo_url)) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Invalid photo URL" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     const clientEmail = Deno.env.get("GOOGLE_CLIENT_EMAIL");
     const privateKey = Deno.env.get("GOOGLE_PRIVATE_KEY")?.replace(/\\n/g, "\n");
@@ -130,17 +194,17 @@ serve(async (req) => {
       }
     }
 
-    // Append row
+    // Sanitize all values before sending to Google Sheets
     const values = [[
-      full_name || "",
-      phone || "",
-      email || "",
-      position || "",
-      city || "",
-      state || "",
-      resume_url || "",
-      photo_url || "",
-      created_at || new Date().toISOString(),
+      sanitizeForSheets(full_name),
+      sanitizeForSheets(phone),
+      sanitizeForSheets(email),
+      sanitizeForSheets(position),
+      sanitizeForSheets(city),
+      sanitizeForSheets(state),
+      sanitizeForSheets(resume_url),
+      sanitizeForSheets(photo_url),
+      sanitizeForSheets(created_at || new Date().toISOString()),
       "Pending",
     ]];
 
@@ -159,7 +223,6 @@ serve(async (req) => {
     if (!appendRes.ok) {
       const errText = await appendRes.text();
       console.error("Google Sheets append error:", errText);
-      // Don't fail the whole flow — DB insert already succeeded
       return new Response(
         JSON.stringify({ success: false, error: "Failed to sync to Google Sheets" }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -173,7 +236,7 @@ serve(async (req) => {
   } catch (e) {
     console.error("sync-to-sheets error:", e);
     return new Response(
-      JSON.stringify({ success: false, error: e instanceof Error ? e.message : "Unknown error" }),
+      JSON.stringify({ success: false, error: "Sync failed" }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
