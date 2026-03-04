@@ -1,13 +1,10 @@
 /**
- * Chat service — Platform Only and Global Search.
- * Platform: uses Lovable Cloud edge function with AI-powered answers.
- * Global: calls backend /global-chat or returns friendly message.
+ * Chat service — Platform (streaming RAG) and Global Search.
  */
 
 import { supabase } from '@/integrations/supabase/client';
 
 export type ChatMode = 'platform' | 'global';
-
 export type AnswerSource = 'platform' | 'web' | 'website';
 
 export interface ChatAnswer {
@@ -19,9 +16,131 @@ export interface ChatAnswer {
 const RAW_API_BASE = import.meta.env.VITE_API_BASE_URL as string | undefined;
 const CHAT_API_BASE = (RAW_API_BASE && RAW_API_BASE.replace(/\/$/, '')) || '';
 
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/platform-chat`;
+
 /**
- * Platform chat — calls edge function powered by Lovable AI.
- * Never throws to the user; always returns a friendly message.
+ * Platform chat with SSE streaming — calls edge function powered by RAG + Lovable AI.
+ */
+export async function streamPlatformChat({
+  message,
+  onDelta,
+  onDone,
+  onError,
+  signal,
+}: {
+  message: string;
+  onDelta: (text: string) => void;
+  onDone: () => void;
+  onError: (error: string) => void;
+  signal?: AbortSignal;
+}): Promise<void> {
+  try {
+    const resp = await fetch(CHAT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      },
+      body: JSON.stringify({ message }),
+      signal,
+    });
+
+    if (!resp.ok) {
+      // Non-streaming error response (JSON)
+      try {
+        const errData = await resp.json();
+        if (errData?.answer) {
+          onDelta(errData.answer);
+          onDone();
+          return;
+        }
+      } catch {
+        // fall through
+      }
+      onError("Namaste 🙏 I'm experiencing a brief pause. Please try again.");
+      return;
+    }
+
+    const contentType = resp.headers.get('Content-Type') || '';
+
+    // If response is JSON (non-streaming fallback)
+    if (contentType.includes('application/json')) {
+      const data = await resp.json();
+      onDelta(data?.answer || data?.choices?.[0]?.message?.content || "Namaste 🙏 Please try again.");
+      onDone();
+      return;
+    }
+
+    // SSE streaming
+    if (!resp.body) {
+      onError("Namaste 🙏 Streaming not available. Please try again.");
+      return;
+    }
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let streamDone = false;
+
+    while (!streamDone) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      let newlineIndex: number;
+      while ((newlineIndex = buffer.indexOf('\n')) !== -1) {
+        let line = buffer.slice(0, newlineIndex);
+        buffer = buffer.slice(newlineIndex + 1);
+
+        if (line.endsWith('\r')) line = line.slice(0, -1);
+        if (line.startsWith(':') || line.trim() === '') continue;
+        if (!line.startsWith('data: ')) continue;
+
+        const jsonStr = line.slice(6).trim();
+        if (jsonStr === '[DONE]') {
+          streamDone = true;
+          break;
+        }
+
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+          if (content) onDelta(content);
+        } catch {
+          // Partial JSON — put back and wait
+          buffer = line + '\n' + buffer;
+          break;
+        }
+      }
+    }
+
+    // Final flush
+    if (buffer.trim()) {
+      for (let raw of buffer.split('\n')) {
+        if (!raw) continue;
+        if (raw.endsWith('\r')) raw = raw.slice(0, -1);
+        if (raw.startsWith(':') || raw.trim() === '') continue;
+        if (!raw.startsWith('data: ')) continue;
+        const jsonStr = raw.slice(6).trim();
+        if (jsonStr === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+          if (content) onDelta(content);
+        } catch { /* ignore */ }
+      }
+    }
+
+    onDone();
+  } catch (e) {
+    if (signal?.aborted) return;
+    console.error('[platform-chat] stream error:', e);
+    onError("Namaste 🙏 I'm having a brief moment of silence. Please try again.");
+  }
+}
+
+/**
+ * Platform chat — non-streaming fallback.
  */
 async function platformChat(message: string): Promise<ChatAnswer> {
   try {
@@ -38,7 +157,7 @@ async function platformChat(message: string): Promise<ChatAnswer> {
     }
 
     return {
-      answer: data?.answer || "Namaste 🙏 I couldn't find specific information for your query. Please try rephrasing or visit [artofliving.org](https://www.artofliving.org) directly.",
+      answer: data?.answer || data?.choices?.[0]?.message?.content || "Namaste 🙏 I couldn't find specific information. Please visit [artofliving.org](https://www.artofliving.org).",
       source: (data?.source as AnswerSource) || 'platform',
       suggested_questions: data?.suggested_questions,
     };
@@ -52,12 +171,12 @@ async function platformChat(message: string): Promise<ChatAnswer> {
 }
 
 /**
- * Global search — calls backend if configured, otherwise returns guidance.
+ * Global search — calls backend if configured.
  */
 async function globalSearch(message: string): Promise<ChatAnswer> {
   if (!CHAT_API_BASE) {
     return {
-      answer: "Namaste 🙏 Global Search is not currently available. Please use **Platform Only** mode to ask about Art of Living programs, events, and services.",
+      answer: "Namaste 🙏 Global Search is not currently available. Please use **Platform Only** mode.",
       source: 'web',
     };
   }
@@ -68,15 +187,15 @@ async function globalSearch(message: string): Promise<ChatAnswer> {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message }),
     });
-    const data = (await res.json().catch(() => ({}))) as { answer?: string; error?: string };
+    const data = (await res.json().catch(() => ({}))) as { answer?: string };
     if (res.ok && typeof data.answer === 'string') {
       return { answer: data.answer, source: 'web' };
     }
     return {
-      answer: "Namaste 🙏 Global Search is temporarily unavailable. Please use **Platform Only** mode for Art of Living related queries.",
+      answer: "Namaste 🙏 Global Search is temporarily unavailable. Please use **Platform Only** mode.",
       source: 'web',
     };
-  } catch (_e) {
+  } catch {
     return {
       answer: "Namaste 🙏 Global Search is temporarily unavailable. Please try **Platform Only** mode.",
       source: 'web',
@@ -85,18 +204,12 @@ async function globalSearch(message: string): Promise<ChatAnswer> {
 }
 
 /**
- * Get answer for a message in the given mode.
- * NEVER throws or shows raw errors to the user.
+ * Get answer — non-streaming. Used for global mode.
  */
 export async function getAnswer(message: string, mode: ChatMode): Promise<ChatAnswer> {
   const trimmed = message.trim();
-  if (!trimmed) {
-    return { answer: 'Please ask a question.', source: 'platform' };
-  }
+  if (!trimmed) return { answer: 'Please ask a question.', source: 'platform' };
 
-  if (mode === 'platform') {
-    return platformChat(trimmed);
-  }
-
+  if (mode === 'platform') return platformChat(trimmed);
   return globalSearch(trimmed);
 }
