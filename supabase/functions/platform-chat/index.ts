@@ -223,13 +223,14 @@ serve(async (req) => {
   }
 
   // Origin validation
-  const origin = req.headers.get("origin");
-  const allowedOrigins = [
+  const origin = req.headers.get("origin") || "";
+  const allowedPatterns = [
     "https://innerlight-system.lovable.app",
     "http://localhost:8080",
     "http://localhost:5173",
   ];
-  if (origin && !allowedOrigins.includes(origin)) {
+  const isAllowed = !origin || allowedPatterns.some(p => origin === p) || origin.endsWith(".lovable.app");
+  if (!isAllowed) {
     return new Response("Forbidden", { status: 403, headers: corsHeaders });
   }
 
