@@ -1,5 +1,6 @@
 /**
  * useChat — AOL Assistant with streaming support for platform mode.
+ * Includes greeting-once logic and conversation history.
  */
 
 import { useState, useCallback, useRef } from 'react';
@@ -11,6 +12,7 @@ import {
 import { getAnswer, streamPlatformChat, type AnswerSource } from '@/lib/chat/chatService';
 
 const SESSION_KEY = 'aol_chat_session';
+const GREETING_KEY = 'aol_chat_session_started';
 
 export type ChatMessageSource = AnswerSource | DataSource;
 
@@ -47,6 +49,30 @@ function saveSession(messages: ChatMessage[]) {
   }
 }
 
+function isFirstMessage(): boolean {
+  try {
+    return sessionStorage.getItem(GREETING_KEY) !== 'true';
+  } catch {
+    return true;
+  }
+}
+
+function markSessionStarted() {
+  try {
+    sessionStorage.setItem(GREETING_KEY, 'true');
+  } catch {
+    // ignore
+  }
+}
+
+/** Build conversation history for the edge function (last 6 turns) */
+function buildConversationHistory(messages: ChatMessage[]): Array<{ role: string; content: string }> {
+  return messages
+    .filter(m => !m.isStreaming)
+    .slice(-6)
+    .map(m => ({ role: m.role, content: m.content }));
+}
+
 export function useChat(conversationId?: string | null) {
   const [messages, setMessages] = useState<ChatMessage[]>(loadSession);
   const [loading, setLoading] = useState(false);
@@ -70,6 +96,9 @@ export function useChat(conversationId?: string | null) {
         content: text,
         timestamp: Date.now(),
       };
+
+      // Determine if this is the first message of the session
+      const firstMsg = isFirstMessage();
 
       setMessages((prev) => {
         const next = [...prev, userMsg];
@@ -101,8 +130,13 @@ export function useChat(conversationId?: string | null) {
         ]);
 
         try {
+          // Build conversation history from current messages
+          const history = buildConversationHistory(messages);
+
           await streamPlatformChat({
             message: text,
+            conversationHistory: history,
+            isFirstMessage: firstMsg,
             signal: controller.signal,
             onDelta: (chunk) => {
               assistantSoFar += chunk;
@@ -115,6 +149,9 @@ export function useChat(conversationId?: string | null) {
               );
             },
             onDone: () => {
+              // Mark session as started after first successful response
+              if (firstMsg) markSessionStarted();
+
               const responseTime = Date.now() - startTime;
               setMessages((prev) => {
                 const updated = prev.map((m) =>
@@ -144,7 +181,7 @@ export function useChat(conversationId?: string | null) {
           setMessages((prev) => {
             const updated = prev.map((m) =>
               m.id === assistantId
-                ? { ...m, content: "Namaste 🙏 I'm having a brief moment of silence. Please try again.", isStreaming: false }
+                ? { ...m, content: "I'm sorry, something went wrong while retrieving that information. Please try again.", isStreaming: false }
                 : m
             );
             saveSession(updated);
@@ -172,7 +209,7 @@ export function useChat(conversationId?: string | null) {
           const assistantMsg: ChatMessage = {
             id: `b-${Date.now()}`,
             role: 'assistant',
-            content: "Namaste 🙏 I'm having a brief moment of silence. Please try again.",
+            content: "I'm sorry, something went wrong while retrieving that information. Please try again.",
             source: 'platform',
             timestamp: Date.now(),
           };
@@ -186,7 +223,7 @@ export function useChat(conversationId?: string | null) {
         }
       }
     },
-    [mode, currentConversationId]
+    [mode, currentConversationId, messages]
   );
 
   const clearMessages = useCallback(() => {
@@ -195,6 +232,7 @@ export function useChat(conversationId?: string | null) {
     setCurrentConversationId(null);
     try {
       sessionStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(GREETING_KEY);
     } catch {
       // ignore
     }
@@ -216,23 +254,23 @@ function generateSuggestions(query: string): string[] {
   const q = query.toLowerCase();
   if (/program|course|happiness|workshop/.test(q)) {
     return [
-      "What is the Happiness Program and how much does it cost?",
+      "What is the Happiness Program?",
       "How do I register for Sri Sri Yoga?",
       "Tell me about the Silence Retreat",
     ];
   }
   if (/event|festival|shivratri|navratri/.test(q)) {
     return [
-      "When is the next Maha Shivaratri celebration?",
+      "When is the next celebration?",
       "Tell me about Navratri at the ashram",
       "What weekly events are available?",
     ];
   }
-  if (/ashram|visit|stay|accommod/.test(q)) {
+  if (/ashram|visit|stay|accommod|room|book/.test(q)) {
     return [
       "What accommodation options are available?",
       "What are the meal timings?",
-      "How do I reach the ashram from Bangalore airport?",
+      "How do I reach the ashram?",
     ];
   }
   if (/meditat|kriya|breath/.test(q)) {

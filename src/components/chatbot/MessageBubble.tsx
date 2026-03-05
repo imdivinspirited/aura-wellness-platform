@@ -47,24 +47,23 @@ export function MessageBubble({
 
   return (
     <div
-      className={cn('flex gap-2', isUser ? 'justify-end' : 'justify-start')}
+      className={cn('flex gap-2.5', isUser ? 'justify-end' : 'justify-start')}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       {!isUser && (
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF6B35]/10">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF6B35]/10 mt-0.5">
           {LOTUS_SVG}
         </div>
       )}
       <div className={cn('flex max-w-[85%] flex-col', isUser ? 'items-end' : 'items-start')}>
         <div
           className={cn(
-            'relative rounded-[20px] px-4 py-2 text-sm shadow-sm',
+            'relative rounded-2xl px-4 py-2.5 text-sm leading-relaxed',
             isUser
-              ? 'rounded-br-[4px] bg-gradient-to-br from-[#FF6B35] to-[#FF8C5A] text-white'
-              : 'rounded-bl-[4px] bg-[#FAFAF8] text-[#1C1C1C] dark:bg-[#2D2D44] dark:text-[#F5F5F5]'
+              ? 'rounded-br-sm bg-gradient-to-br from-[#C9A227]/20 to-[#C9A227]/10 text-foreground border border-[#C9A227]/30'
+              : 'rounded-bl-sm bg-card text-card-foreground border border-[#C9A227]/15 shadow-sm'
           )}
-          style={{ fontFamily: "'Poppins', sans-serif" }}
         >
           {hover && (
             <Button
@@ -81,16 +80,16 @@ export function MessageBubble({
           {isUser ? (
             <div className="whitespace-pre-wrap break-words pr-8">{msg.content}</div>
           ) : (
-            <div className="prose prose-sm dark:prose-invert max-w-none pr-8">
+            <div className="prose prose-sm dark:prose-invert max-w-none pr-8 [&_a]:text-[#1B4B6F] dark:[&_a]:text-[#7BB8E0] [&_a]:underline">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
               {msg.isStreaming && (
-                <span className="inline-block h-4 w-1 animate-pulse bg-[#FF6B35] ml-0.5 align-text-bottom" />
+                <span className="inline-block h-4 w-0.5 animate-pulse bg-[#FF6B35] ml-0.5 align-text-bottom rounded-full" />
               )}
             </div>
           )}
         </div>
         {showTimestamps && (
-          <span className="mt-1 text-[12px] text-muted-foreground">
+          <span className="mt-1 text-[11px] text-muted-foreground px-1">
             {new Date(msg.timestamp).toLocaleTimeString(undefined, {
               hour: '2-digit',
               minute: '2-digit',
@@ -98,29 +97,32 @@ export function MessageBubble({
           </span>
         )}
         {sourceLabel && (
-          <span className="mt-0.5 text-[11px] text-muted-foreground">{sourceLabel}</span>
+          <span className="mt-0.5 text-[10px] text-muted-foreground px-1">{sourceLabel}</span>
         )}
-        {!isUser && showSuggestions && msg.suggested_questions && msg.suggested_questions.length > 0 && (
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {msg.suggested_questions.slice(0, 3).map((q, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => onSuggestedQuestion?.(q)}
-                className="rounded-full border border-[#C9A227]/50 bg-[#C9A227]/10 px-3 py-1 text-xs font-medium text-foreground hover:bg-[#C9A227]/20 dark:border-[#C9A227]/30 dark:bg-[#C9A227]/20"
-              >
-                {q}
-              </button>
-            ))}
+        {!isUser && showSuggestions && msg.suggested_questions && msg.suggested_questions.length > 0 && !msg.isStreaming && (
+          <div className="mt-2.5 flex flex-col gap-1.5 w-full">
+            <span className="text-[11px] text-muted-foreground font-medium px-1">You may also ask:</span>
+            <div className="flex flex-wrap gap-1.5">
+              {msg.suggested_questions.slice(0, 3).map((q, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => onSuggestedQuestion?.(q)}
+                  className="rounded-full border border-[#C9A227]/40 bg-[#C9A227]/8 px-3 py-1 text-xs font-medium text-foreground hover:bg-[#C9A227]/20 hover:border-[#C9A227]/60 transition-colors duration-200"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
           </div>
         )}
-        {!isUser && onRate && msg.id && (
-          <div className="mt-1 flex gap-1">
+        {!isUser && onRate && msg.id && !msg.isStreaming && (
+          <div className="mt-1 flex gap-1 px-1">
             <button
               type="button"
               onClick={() => onRate(msg.id, 1)}
               aria-label="Good response"
-              className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
             >
               <ThumbsUp className="h-3.5 w-3.5" />
             </button>
@@ -128,7 +130,7 @@ export function MessageBubble({
               type="button"
               onClick={() => onRate(msg.id, -1)}
               aria-label="Bad response"
-              className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
             >
               <ThumbsDown className="h-3.5 w-3.5" />
             </button>
@@ -136,7 +138,7 @@ export function MessageBubble({
         )}
       </div>
       {isUser && (
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF6B35]/20">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 mt-0.5">
           <span className="text-sm">👤</span>
         </div>
       )}

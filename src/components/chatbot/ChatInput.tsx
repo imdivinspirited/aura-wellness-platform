@@ -51,7 +51,7 @@ export function ChatInput({
   const canSend = value.trim().length > 0 && !disabled;
 
   return (
-    <div className="border-t bg-[#FAFAF8] dark:bg-[#1A1A2E] p-3" style={{ fontFamily: "'Poppins', sans-serif" }}>
+    <div className="border-t border-border bg-card p-3">
       <div className="flex gap-2 rounded-2xl border bg-background p-2 shadow-sm">
         <TooltipProvider>
           <Tooltip>
