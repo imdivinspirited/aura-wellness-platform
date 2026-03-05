@@ -22,9 +22,6 @@ export function ChatbotDrawer({ onClose }: ChatbotDrawerProps) {
   const [input, setInput] = useState('');
   const [slideIn, setSlideIn] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
-  const [isDark, setIsDark] = useState(() =>
-    typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
-  );
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -80,13 +77,6 @@ export function ChatbotDrawer({ onClose }: ChatbotDrawerProps) {
     [sendMessage]
   );
 
-  const toggleTheme = useCallback(() => {
-    const root = document.documentElement;
-    const next = !root.classList.contains('dark');
-    root.classList.toggle('dark', next);
-    setIsDark(next);
-  }, []);
-
   if (!isOpen) return null;
 
   return (
@@ -101,12 +91,11 @@ export function ChatbotDrawer({ onClose }: ChatbotDrawerProps) {
       />
       <div
         className={cn(
-          'fixed top-0 right-0 z-[9999] flex h-full w-full flex-col bg-[#FAFAF8] dark:bg-[#1A1A2E] shadow-[0_20px_60px_rgba(0,0,0,0.15)]',
+          'fixed top-0 right-0 z-[9999] flex h-full w-full flex-col bg-background shadow-[0_20px_60px_rgba(0,0,0,0.15)]',
           'transition-transform duration-300'
         )}
         style={{
           transform: slideIn ? 'translateX(0)' : 'translateX(100%)',
-          fontFamily: "'Poppins', sans-serif",
         }}
       >
         {showDashboard ? (
@@ -118,8 +107,6 @@ export function ChatbotDrawer({ onClose }: ChatbotDrawerProps) {
               onModeChange={setMode}
               onClose={handleClose}
               onProfileClick={() => setShowDashboard(true)}
-              onThemeToggle={toggleTheme}
-              isDark={isDark}
             />
             <ChatMessages
               messages={messages}

@@ -23,12 +23,16 @@ const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/platform-cha
  */
 export async function streamPlatformChat({
   message,
+  conversationHistory,
+  isFirstMessage,
   onDelta,
   onDone,
   onError,
   signal,
 }: {
   message: string;
+  conversationHistory?: Array<{ role: string; content: string }>;
+  isFirstMessage?: boolean;
   onDelta: (text: string) => void;
   onDone: () => void;
   onError: (error: string) => void;
@@ -41,7 +45,11 @@ export async function streamPlatformChat({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({
+        message,
+        conversation_history: conversationHistory || [],
+        is_first_message: isFirstMessage ?? false,
+      }),
       signal,
     });
 
@@ -54,10 +62,14 @@ export async function streamPlatformChat({
           onDone();
           return;
         }
+        if (errData?.error) {
+          onError(errData.error);
+          return;
+        }
       } catch {
         // fall through
       }
-      onError("Namaste 🙏 I'm experiencing a brief pause. Please try again.");
+      onError("I'm sorry, something went wrong while retrieving that information. Please try again.");
       return;
     }
 
@@ -66,14 +78,14 @@ export async function streamPlatformChat({
     // If response is JSON (non-streaming fallback)
     if (contentType.includes('application/json')) {
       const data = await resp.json();
-      onDelta(data?.answer || data?.choices?.[0]?.message?.content || "Namaste 🙏 Please try again.");
+      onDelta(data?.answer || data?.choices?.[0]?.message?.content || "Please try again.");
       onDone();
       return;
     }
 
     // SSE streaming
     if (!resp.body) {
-      onError("Namaste 🙏 Streaming not available. Please try again.");
+      onError("Streaming not available. Please try again.");
       return;
     }
 
@@ -134,8 +146,10 @@ export async function streamPlatformChat({
     onDone();
   } catch (e) {
     if (signal?.aborted) return;
-    console.error('[platform-chat] stream error:', e);
-    onError("Namaste 🙏 I'm having a brief moment of silence. Please try again.");
+    if (import.meta.env.DEV) {
+      console.error('[platform-chat] stream error:', e);
+    }
+    onError("I'm sorry, something went wrong while retrieving that information. Please try again.");
   }
 }
 
@@ -149,22 +163,26 @@ async function platformChat(message: string): Promise<ChatAnswer> {
     });
 
     if (error) {
-      console.error('[platform-chat] invoke error:', error);
+      if (import.meta.env.DEV) {
+        console.error('[platform-chat] invoke error:', error);
+      }
       return {
-        answer: "Namaste 🙏 I'm experiencing a brief pause. Please try your question again in a moment.",
+        answer: "I'm sorry, something went wrong while retrieving that information. Please try again.",
         source: 'platform',
       };
     }
 
     return {
-      answer: data?.answer || data?.choices?.[0]?.message?.content || "Namaste 🙏 I couldn't find specific information. Please visit [artofliving.org](https://www.artofliving.org).",
+      answer: data?.answer || data?.choices?.[0]?.message?.content || "I couldn't find specific information. Please visit [artofliving.org](https://www.artofliving.org).",
       source: (data?.source as AnswerSource) || 'platform',
       suggested_questions: data?.suggested_questions,
     };
   } catch (_e) {
-    console.error('[platform-chat] unexpected error:', _e);
+    if (import.meta.env.DEV) {
+      console.error('[platform-chat] unexpected error:', _e);
+    }
     return {
-      answer: "Namaste 🙏 I'm updating my knowledge. Please try again in a moment.",
+      answer: "I'm sorry, something went wrong while retrieving that information. Please try again.",
       source: 'platform',
     };
   }
@@ -176,7 +194,7 @@ async function platformChat(message: string): Promise<ChatAnswer> {
 async function globalSearch(message: string): Promise<ChatAnswer> {
   if (!CHAT_API_BASE) {
     return {
-      answer: "Namaste 🙏 Global Search is not currently available. Please use **Platform Only** mode.",
+      answer: "Global Search is not currently available. Please use **Platform Only** mode for the best experience.",
       source: 'web',
     };
   }
@@ -192,12 +210,12 @@ async function globalSearch(message: string): Promise<ChatAnswer> {
       return { answer: data.answer, source: 'web' };
     }
     return {
-      answer: "Namaste 🙏 Global Search is temporarily unavailable. Please use **Platform Only** mode.",
+      answer: "Global Search is temporarily unavailable. Please use **Platform Only** mode.",
       source: 'web',
     };
   } catch {
     return {
-      answer: "Namaste 🙏 Global Search is temporarily unavailable. Please try **Platform Only** mode.",
+      answer: "Global Search is temporarily unavailable. Please try **Platform Only** mode.",
       source: 'web',
     };
   }
