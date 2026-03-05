@@ -108,12 +108,14 @@ export async function moveEventToPast(
   };
   saveOverrides(overrides);
 
-  console.log('[Event Service] Event moved to past:', {
-    eventId,
-    title: event.title,
-    reason,
-    adminId,
-  });
+  if (import.meta.env.DEV) {
+    console.log('[Event Service] Event moved to past:', {
+      eventId,
+      title: event.title,
+      reason,
+      adminId,
+    });
+  }
 
   return updatedEvent;
 }
