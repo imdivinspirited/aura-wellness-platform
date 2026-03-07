@@ -150,6 +150,7 @@ export const HeroSection = () => {
               src="/images/programs/card_program_beginner_happiness.jpg" 
               alt="Happiness Program"
               className="h-full w-full object-cover"
+              loading="lazy"
             />
           </div>
           <CardContent className="p-5">
