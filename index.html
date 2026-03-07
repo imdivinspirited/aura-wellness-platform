@@ -38,8 +38,9 @@
     <link rel="preload" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" as="font" type="font/woff2" crossorigin />
     
-    <!-- Preload hero image to reduce LCP -->
-    <link rel="preload" href="/images/hero/hero_landing_ashram.jpg" as="image" fetchpriority="high" />
+    <!-- Preload hero image to reduce LCP - responsive -->
+    <link rel="preload" href="/images/hero/hero_landing_ashram_mobile.jpg" as="image" fetchpriority="high" media="(max-width: 768px)" />
+    <link rel="preload" href="/images/hero/hero_landing_ashram.jpg" as="image" fetchpriority="high" media="(min-width: 769px)" />
     
     <!-- Load fonts non-render-blocking via JS injection -->
     <script>
