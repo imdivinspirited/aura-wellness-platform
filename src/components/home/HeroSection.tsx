@@ -31,11 +31,15 @@ export const HeroSection = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero/hero_landing_ashram.jpg"
+          src="/images/hero/hero_landing_ashram_mobile.jpg"
+          srcSet="/images/hero/hero_landing_ashram_mobile.jpg 768w, /images/hero/hero_landing_ashram.jpg 1920w"
+          sizes="100vw"
           alt="Art of Living Bangalore Ashram"
           className="h-full w-full object-cover"
           loading="eager"
           fetchPriority="high"
+          width={1920}
+          height={1080}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
