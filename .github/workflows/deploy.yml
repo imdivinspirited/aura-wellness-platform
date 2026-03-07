@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to EC2 Server
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
@@ -26,4 +26,5 @@ jobs:
             NODE_OPTIONS="--max-old-space-size=4096" npm run build
             sudo rm -rf /var/www/html/*
             sudo cp -r dist/* /var/www/html/
-            sudo systemctl restart nginx
+            sudo systemctl restart nginxyy
+
