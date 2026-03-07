@@ -1,0 +1,29 @@
+name: Deploy Aura Wellness Platform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2 Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/aura-wellness-platform
+            git pull origin main
+            npm install
+            NODE_OPTIONS="--max-old-space-size=4096" npm run build
+            sudo rm -rf /var/www/html/*
+            sudo cp -r dist/* /var/www/html/
+            sudo systemctl restart nginx
