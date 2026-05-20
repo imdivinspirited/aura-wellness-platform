@@ -1,0 +1,8 @@
+Contact: mailto:security@example.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, hi
+Canonical: https://artofliving.org/.well-known/security.txt
+
+# Replace Contact with your security team inbox before production.
+# Hosting/CDN: enable WAF, rate limits, and DDoS protection at the edge (e.g. Cloudflare, AWS WAF).
+# HTTPS: terminate TLS at the load balancer / CDN; enable HSTS (see nginx or CDN docs).

@@ -1,0 +1,996 @@
+{
+  "generatedAt": "2026-04-17T05:40:33.882Z",
+  "items": [
+    {
+      "id": "happiness-program",
+      "title": "Happiness Program",
+      "description": "Transform your life with ancient wisdom. A comprehensive program for lasting happiness and inner peace through meditation, breathing techniques (SKY), and wisdom.",
+      "category": "Course",
+      "tags": [
+        "meditation",
+        "yoga",
+        "stress relief",
+        "SKY",
+        "wellness",
+        "beginner"
+      ],
+      "url": "/programs/happiness-program",
+      "image": "/images/programs/happiness-program.jpg"
+    },
+    {
+      "id": "sri-sri-yoga",
+      "title": "Sri Sri Yoga",
+      "description": "A holistic approach to yoga combining asanas, pranayama, and meditation for physical and mental well-being.",
+      "category": "Course",
+      "tags": [
+        "yoga",
+        "asanas",
+        "pranayama",
+        "meditation"
+      ],
+      "url": "/programs/sri-sri-yoga",
+      "image": "/images/programs/sri-sri-yoga.jpg"
+    },
+    {
+      "id": "sahaj-samadhi",
+      "title": "Sahaj Samadhi Meditation",
+      "description": "An effortless meditation technique that brings deep rest and inner silence, reducing stress and enhancing clarity.",
+      "category": "Course",
+      "tags": [
+        "meditation",
+        "samadhi",
+        "stress relief",
+        "clarity"
+      ],
+      "url": "/programs/sahaj-samadhi",
+      "image": "/images/programs/sahaj-samadhi.jpg"
+    },
+    {
+      "id": "silence-retreat",
+      "title": "Silence Retreat",
+      "description": "A residential retreat in complete silence to deepen your meditation practice and experience inner transformation.",
+      "category": "Course",
+      "tags": [
+        "retreat",
+        "silence",
+        "meditation",
+        "residential"
+      ],
+      "url": "/programs/silence-retreat",
+      "image": "/images/programs/silence-retreat.jpg"
+    },
+    {
+      "id": "corporate-program",
+      "title": "Corporate Programs",
+      "description": "Wellness programs for organizations: reduce stress, improve employee well-being, and enhance productivity.",
+      "category": "Course",
+      "tags": [
+        "corporate",
+        "wellness",
+        "stress management",
+        "productivity"
+      ],
+      "url": "/programs/corporate",
+      "image": "/images/programs/corporate.jpg"
+    },
+    {
+      "id": "amp",
+      "title": "Advanced Meditation Program (AMP)",
+      "description": "An advanced residential program for deepening meditation and experiencing higher states of consciousness.",
+      "category": "Course",
+      "tags": [
+        "advanced",
+        "meditation",
+        "residential",
+        "consciousness"
+      ],
+      "url": "/programs/advance/amp",
+      "image": "/images/programs/amp.jpg"
+    },
+    {
+      "id": "dsn",
+      "title": "Dynamism for Self and Nation (DSN)",
+      "description": "A leadership program that empowers individuals to contribute to society while achieving personal excellence.",
+      "category": "Course",
+      "tags": [
+        "leadership",
+        "service",
+        "excellence",
+        "society"
+      ],
+      "url": "/programs/advance/dsn",
+      "image": "/images/programs/dsn.jpg"
+    },
+    {
+      "id": "blessings",
+      "title": "Blessings Program",
+      "description": "A spiritual program offering blessings and guidance for life transformation.",
+      "category": "Course",
+      "tags": [
+        "spiritual",
+        "blessings",
+        "transformation"
+      ],
+      "url": "/programs/advance/blessings",
+      "image": "/images/programs/blessings.jpg"
+    },
+    {
+      "id": "sri-sri-yoga-deep-dive",
+      "title": "Sri Sri Yoga Deep Dive (Level 2)",
+      "description": "An advanced yoga program with advanced asanas, pranayama techniques, and yogic wisdom.",
+      "category": "Course",
+      "tags": [
+        "yoga",
+        "advanced",
+        "pranayama",
+        "yogic wisdom"
+      ],
+      "url": "/programs/advance/sri-sri-yoga-deep-dive-level-2",
+      "image": "/images/programs/yoga-deep-dive.jpg"
+    },
+    {
+      "id": "explore-about",
+      "title": "About Us",
+      "description": "Learn about Art of Living Foundation, our mission, Gurudev Sri Sri Ravi Shankar, and our global impact.",
+      "category": "Page",
+      "tags": [
+        "about",
+        "mission",
+        "foundation",
+        "Gurudev"
+      ],
+      "url": "/explore/about",
+      "image": "/images/explore/about.jpg"
+    },
+    {
+      "id": "explore",
+      "title": "Explore",
+      "description": "Explore programs, articles, videos, and resources for wellness and meditation.",
+      "category": "Page",
+      "tags": [
+        "explore",
+        "articles",
+        "videos",
+        "resources"
+      ],
+      "url": "/explore",
+      "image": "/images/explore/explore.jpg"
+    },
+    {
+      "id": "explore-articles",
+      "title": "Articles & Blog",
+      "description": "Read articles and blog posts on meditation, yoga, wellness, and life skills.",
+      "category": "Page",
+      "tags": [
+        "articles",
+        "blog",
+        "meditation",
+        "wellness"
+      ],
+      "url": "/explore/articles",
+      "image": "/images/explore/articles.jpg"
+    },
+    {
+      "id": "connect-hub",
+      "title": "Connect",
+      "description": "Contact, support, FAQs, and help for your journey.",
+      "category": "Connect",
+      "tags": [
+        "connect",
+        "help",
+        "community"
+      ],
+      "url": "/connect"
+    },
+    {
+      "id": "connect-faqs",
+      "title": "FAQs",
+      "description": "Frequently asked questions about programs, registration, and Art of Living.",
+      "category": "Page",
+      "tags": [
+        "FAQs",
+        "help",
+        "questions",
+        "support"
+      ],
+      "url": "/connect/faqs",
+      "image": "/images/connect/faqs.jpg"
+    },
+    {
+      "id": "connect-contact",
+      "title": "Contact Us",
+      "description": "Contact Art of Living: email, phone, and visit the ashram.",
+      "category": "Page",
+      "tags": [
+        "contact",
+        "email",
+        "phone",
+        "ashram"
+      ],
+      "url": "/connect/contact",
+      "image": "/images/connect/contact.jpg"
+    },
+    {
+      "id": "seva-careers",
+      "title": "Seva & Careers",
+      "description": "Serve, grow and thrive at Art of Living. Seva, jobs, and internships — apply online.",
+      "category": "Page",
+      "tags": [
+        "seva",
+        "careers",
+        "jobs",
+        "internships",
+        "volunteer"
+      ],
+      "url": "/seva-careers",
+      "image": "/images/seva-careers.jpg"
+    },
+    {
+      "id": "programs-listing",
+      "title": "All Programs",
+      "description": "Browse all Art of Living programs: happiness, yoga, meditation, corporate, and advanced courses.",
+      "category": "Page",
+      "tags": [
+        "programs",
+        "courses",
+        "catalog",
+        "listing"
+      ],
+      "url": "/programs",
+      "image": "/images/programs/listing.jpg"
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "description": "Upcoming events, workshops, and retreats near you.",
+      "category": "Event",
+      "tags": [
+        "events",
+        "workshops",
+        "retreats",
+        "calendar"
+      ],
+      "url": "/events",
+      "image": "/images/events.jpg"
+    },
+    {
+      "id": "events-upcoming",
+      "title": "Upcoming Events",
+      "description": "Browse upcoming workshops, celebrations, and retreats at the ashram.",
+      "category": "Event",
+      "tags": [
+        "events",
+        "upcoming",
+        "calendar",
+        "schedule"
+      ],
+      "url": "/events/upcoming"
+    },
+    {
+      "id": "events-ongoing",
+      "title": "Ongoing Events",
+      "description": "Events happening now on campus.",
+      "category": "Event",
+      "tags": [
+        "events",
+        "ongoing",
+        "now"
+      ],
+      "url": "/events/ongoing"
+    },
+    {
+      "id": "events-past",
+      "title": "Past Events",
+      "description": "Archive of past programs and celebrations.",
+      "category": "Event",
+      "tags": [
+        "events",
+        "past",
+        "archive"
+      ],
+      "url": "/events/past"
+    },
+    {
+      "id": "wellness-program",
+      "title": "Wellness Programs",
+      "description": "Holistic wellness courses and retreats for body and mind.",
+      "category": "Course",
+      "tags": [
+        "wellness",
+        "health",
+        "retreat",
+        "healing"
+      ],
+      "url": "/programs/wellness",
+      "image": "/images/programs/wellness.jpg"
+    },
+    {
+      "id": "samyam",
+      "title": "Samyam",
+      "description": "Advanced residential program for deep silence and inner discipline.",
+      "category": "Course",
+      "tags": [
+        "samyam",
+        "advanced",
+        "meditation",
+        "residential"
+      ],
+      "url": "/programs/advance/samyam"
+    },
+    {
+      "id": "utkarsha-yoga",
+      "title": "Utkarsha Yoga",
+      "description": "Yoga for children and teens — focus, confidence, and joy.",
+      "category": "Course",
+      "tags": [
+        "children",
+        "teens",
+        "yoga",
+        "Utkarsha"
+      ],
+      "url": "/programs/utkarsha-yoga"
+    },
+    {
+      "id": "medha-myl-1",
+      "title": "Medha Yoga Level 1 (MYL-1)",
+      "description": "Foundational yoga and wisdom for clarity and energy.",
+      "category": "Course",
+      "tags": [
+        "Medha",
+        "MYL",
+        "yoga",
+        "beginner"
+      ],
+      "url": "/programs/myl-1"
+    },
+    {
+      "id": "medha-myl-2",
+      "title": "Medha Yoga Level 2 (MYL-2)",
+      "description": "Deeper practices and integration for graduates of Level 1.",
+      "category": "Course",
+      "tags": [
+        "Medha",
+        "MYL",
+        "yoga",
+        "advanced"
+      ],
+      "url": "/programs/myl-2"
+    },
+    {
+      "id": "intuition-process",
+      "title": "Intuition Process",
+      "description": "Unlock intuition and creativity for children and adults.",
+      "category": "Course",
+      "tags": [
+        "intuition",
+        "children",
+        "creativity",
+        "IP"
+      ],
+      "url": "/programs/intuition-process"
+    },
+    {
+      "id": "vedic-wisdom",
+      "title": "Vedic Wisdom",
+      "description": "Study of Vedic knowledge, chanting, and timeless wisdom.",
+      "category": "Course",
+      "tags": [
+        "Vedic",
+        "wisdom",
+        "scripture",
+        "Sanskrit"
+      ],
+      "url": "/programs/vedic-wisdom"
+    },
+    {
+      "id": "panchkarma",
+      "title": "Panchakarma",
+      "description": "Ayurvedic cleansing and rejuvenation therapies.",
+      "category": "Course",
+      "tags": [
+        "Ayurveda",
+        "Panchakarma",
+        "wellness",
+        "detox",
+        "therapy"
+      ],
+      "url": "/programs/panchkarma"
+    },
+    {
+      "id": "yoga-deep-dive",
+      "title": "Sri Sri Yoga Deep Dive",
+      "description": "Immersive yoga journey with asanas, pranayama, and depth.",
+      "category": "Course",
+      "tags": [
+        "yoga",
+        "deep dive",
+        "Sri Sri Yoga",
+        "asanas"
+      ],
+      "url": "/programs/yoga-deep-dive"
+    },
+    {
+      "id": "hatha-yoga",
+      "title": "Hatha Yoga Sadhana",
+      "description": "Classical hatha yoga for strength, flexibility, and steadiness.",
+      "category": "Course",
+      "tags": [
+        "Hatha",
+        "yoga",
+        "asanas"
+      ],
+      "url": "/programs/hatha-yoga"
+    },
+    {
+      "id": "spine-care-yoga",
+      "title": "Spine Care Yoga",
+      "description": "Gentle yoga for spinal health and back care.",
+      "category": "Course",
+      "tags": [
+        "spine",
+        "back",
+        "yoga",
+        "therapy",
+        "posture"
+      ],
+      "url": "/programs/spine-care"
+    },
+    {
+      "id": "corporate-retreats",
+      "title": "Corporate Wellbeing Retreats",
+      "description": "Team retreats and wellbeing programs for organizations.",
+      "category": "Course",
+      "tags": [
+        "corporate",
+        "retreat",
+        "team",
+        "wellbeing"
+      ],
+      "url": "/programs/corporate-retreats"
+    },
+    {
+      "id": "self-designed-getaways",
+      "title": "Self-Designed Getaways",
+      "description": "Design your own stay and program mix at the ashram.",
+      "category": "Course",
+      "tags": [
+        "getaway",
+        "stay",
+        "custom",
+        "retreat"
+      ],
+      "url": "/programs/self-designed"
+    },
+    {
+      "id": "host-your-program",
+      "title": "Host Your Program",
+      "description": "Host courses, retreats, or gatherings at the campus.",
+      "category": "Course",
+      "tags": [
+        "host",
+        "venue",
+        "organize",
+        "group"
+      ],
+      "url": "/programs/host"
+    },
+    {
+      "id": "services-hub",
+      "title": "Services",
+      "description": "Stay, dining, transport, shopping, and campus facilities for your visit.",
+      "category": "Service",
+      "tags": [
+        "services",
+        "ashram",
+        "visitor",
+        "stay",
+        "campus"
+      ],
+      "url": "/services"
+    },
+    {
+      "id": "services-stay",
+      "title": "Stay & Meals",
+      "description": "Accommodation options and meal plans at the ashram.",
+      "category": "Service",
+      "tags": [
+        "stay",
+        "accommodation",
+        "room",
+        "meals",
+        "lodging",
+        "hotel"
+      ],
+      "url": "/services/stay",
+      "image": "/images/services/stay.jpg"
+    },
+    {
+      "id": "services-dining",
+      "title": "Dining",
+      "description": "Sattvic dining halls and meal timings for residents and visitors.",
+      "category": "Service",
+      "tags": [
+        "dining",
+        "food",
+        "meals",
+        "restaurant",
+        "canteen"
+      ],
+      "url": "/services/dining"
+    },
+    {
+      "id": "services-transport",
+      "title": "Transport",
+      "description": "Airport pickup, campus shuttles, and travel help.",
+      "category": "Service",
+      "tags": [
+        "transport",
+        "airport",
+        "taxi",
+        "shuttle",
+        "travel"
+      ],
+      "url": "/services/transport"
+    },
+    {
+      "id": "services-facilities",
+      "title": "Facilities",
+      "description": "Medical desk, utilities, and essential amenities on campus.",
+      "category": "Service",
+      "tags": [
+        "facilities",
+        "medical",
+        "amenities",
+        "campus"
+      ],
+      "url": "/services/facilities"
+    },
+    {
+      "id": "services-shopping",
+      "title": "Shopping",
+      "description": "Books, gifts, wellness products, and souvenirs.",
+      "category": "Service",
+      "tags": [
+        "shopping",
+        "store",
+        "books",
+        "gifts",
+        "shop"
+      ],
+      "url": "/services/shopping"
+    },
+    {
+      "id": "international-visitors",
+      "title": "International Visitors",
+      "description": "Timezone-friendly information, visas, and programs for global guests.",
+      "category": "Page",
+      "tags": [
+        "international",
+        "foreign",
+        "visa",
+        "travel",
+        "overseas"
+      ],
+      "url": "/international"
+    },
+    {
+      "id": "explore-mission",
+      "title": "Mission & Vision",
+      "description": "Our guiding values, impact, and vision for service.",
+      "category": "Page",
+      "tags": [
+        "mission",
+        "vision",
+        "values",
+        "about"
+      ],
+      "url": "/explore/mission"
+    },
+    {
+      "id": "explore-videos",
+      "title": "Videos & Talks",
+      "description": "Discourses, guided practices, and inspiring talks.",
+      "category": "Page",
+      "tags": [
+        "videos",
+        "YouTube",
+        "talks",
+        "discourse",
+        "watch"
+      ],
+      "url": "/explore/videos"
+    },
+    {
+      "id": "explore-testimonials",
+      "title": "Testimonials",
+      "description": "Stories from participants and visitors worldwide.",
+      "category": "Page",
+      "tags": [
+        "testimonials",
+        "reviews",
+        "stories",
+        "experience"
+      ],
+      "url": "/explore/testimonials"
+    },
+    {
+      "id": "connect-support",
+      "title": "Support Desk",
+      "description": "Help with bookings, payments, cancellations, and account issues.",
+      "category": "Connect",
+      "tags": [
+        "support",
+        "help",
+        "desk",
+        "ticket",
+        "customer service"
+      ],
+      "url": "/connect/support"
+    },
+    {
+      "id": "opportunities",
+      "title": "Opportunities",
+      "description": "Programs, projects, and paths to grow with the organization.",
+      "category": "Page",
+      "tags": [
+        "opportunities",
+        "projects",
+        "growth",
+        "careers"
+      ],
+      "url": "/opportunities"
+    },
+    {
+      "id": "home",
+      "title": "Home",
+      "description": "The Art of Living International Center Bangalore — landing page.",
+      "category": "Page",
+      "tags": [
+        "home",
+        "landing",
+        "AOLIC",
+        "Bangalore",
+        "ashram"
+      ],
+      "url": "/",
+      "image": "/images/hero/hero_landing_ashram.webp"
+    },
+    {
+      "id": "profile",
+      "title": "Profile & Dashboard",
+      "description": "Your account, bookings, settings, and preferences.",
+      "category": "Page",
+      "tags": [
+        "profile",
+        "account",
+        "dashboard",
+        "bookings",
+        "user"
+      ],
+      "url": "/profile"
+    },
+    {
+      "id": "settings",
+      "title": "Settings",
+      "description": "Language, appearance, notifications, and privacy.",
+      "category": "Page",
+      "tags": [
+        "settings",
+        "preferences",
+        "language",
+        "theme",
+        "account"
+      ],
+      "url": "/settings"
+    },
+    {
+      "id": "event-shivratri-2026",
+      "title": "Maha Shivratri Celebrations 2026",
+      "description": "A night of deep meditation and devotion celebrating Lord Shiva Join millions worldwide in celebrating Maha Shivratri, a night of deep meditation, devotion, and transformation. Experience powerful meditations, spiritual discourses, and the divine energy of this auspicious occasion. All-night meditation and chanting Special discourse by Gurudev Live webcast for global participation Powerful group meditations",
+      "category": "Event",
+      "tags": [
+        "festival",
+        "meditation",
+        "spiritual",
+        "celebration",
+        "maha",
+        "shivratri",
+        "2026",
+        "celebrations",
+        "event",
+        "events",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/maha-shivratri-2026",
+      "image": "/images/events/shivratri_celebration_night.jpg"
+    },
+    {
+      "id": "event-gurudev-birthday-2026",
+      "title": "Gurudev Sri Sri Ravi Shankar's Birthday Celebration",
+      "description": "Gurudev's 70th birthday and 45 years of The Art of Living — a global day of meditation, satsang, and seva, anchored at the International Center, Bangalore, and open to the world. Each year, millions of hearts turn toward Bangalore and toward home centres worldwide to honour Gurudev Sri Sri Ravi Shankar — teacher, humanitarian, and voice of peace. The day weaves together silent sitting, satsang, seva, and celebration in a spirit of gratitude. At The Art of Living International Center, programmes unfold through the day with space for both in-person gathering and thoughtful participation from afar. Wherever you are, you are welcome to align with the schedule, join official broadcasts when offered, and carry the st",
+      "category": "Event",
+      "tags": [
+        "celebration",
+        "birthday",
+        "service",
+        "meditation",
+        "gurudev",
+        "2026",
+        "sri",
+        "ravi",
+        "shankar",
+        "event",
+        "events",
+        "sri sri ravi shankar",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/gurudev-birthday-2026",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Sri_Sri_Ravi_Shankar_-_new.jpg"
+    },
+    {
+      "id": "event-world-meditation-day-2026",
+      "title": "World Meditation Day 2026",
+      "description": "Global synchronized meditation for world peace Join the global meditation movement on World Meditation Day. Millions come together to meditate simultaneously, creating a wave of peace and positivity across the planet. Synchronized global meditation Live webcast from multiple locations Guided meditation by Gurudev Record-breaking participation",
+      "category": "Event",
+      "tags": [
+        "meditation",
+        "global",
+        "peace",
+        "wellness",
+        "world",
+        "day",
+        "2026",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/world-meditation-day-2026",
+      "image": "/images/events/world_meditation_day.jpg"
+    },
+    {
+      "id": "event-navratri-2026",
+      "title": "Navratri Celebrations 2026",
+      "description": "Nine nights of devotion, meditation, and celebration Celebrate the nine nights of Navratri with special pujas, meditations, and cultural programs. Experience the divine feminine energy and spiritual transformation. Daily pujas and meditations Cultural performances Special discourses Community celebrations",
+      "category": "Event",
+      "tags": [
+        "festival",
+        "navratri",
+        "devotion",
+        "cultural",
+        "2026",
+        "celebrations",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/navratri-2026",
+      "image": "/images/events/navratri_celebration.jpg"
+    },
+    {
+      "id": "event-iwc-2025",
+      "title": "International Women's Conference 2025",
+      "description": "Global conference for women leaders and change-makers A global gathering of women leaders, change-makers, and visionaries. Explore themes of leadership, empowerment, and creating positive change in the world. Keynote addresses by global leaders Panel discussions Networking opportunities Workshops and sessions",
+      "category": "Event",
+      "tags": [
+        "conference",
+        "women",
+        "leadership",
+        "empowerment",
+        "iwc",
+        "2025",
+        "international",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/iwc-2025",
+      "image": "/images/events/iwc_conference.jpg"
+    },
+    {
+      "id": "event-wcf-2023",
+      "title": "World Culture Festival 2023",
+      "description": "The world's largest cultural gathering celebrating unity in diversity The largest cultural gathering in history, bringing together millions of people from 180+ countries to celebrate unity in diversity through music, dance, meditation, and dialogue. 6.5 million attendees 180+ countries represented Guinness World Record for largest yoga session Performances by 8,000+ artists Presence of world leaders and dignitaries",
+      "category": "Event",
+      "tags": [
+        "festival",
+        "culture",
+        "world",
+        "record",
+        "2023",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/world-culture-festival-2023",
+      "image": "/images/events/world_culture_festival_2023.jpg"
+    },
+    {
+      "id": "event-wcf-2016",
+      "title": "World Culture Festival 2016",
+      "description": "Historic cultural celebration on the banks of Yamuna A historic celebration of unity in diversity on the banks of the Yamuna River in Delhi, featuring performances, meditations, and cultural exchanges from around the world. 3.5 million attendees 155 countries represented Guinness World Record achievements Performances by thousands of artists",
+      "category": "Event",
+      "tags": [
+        "festival",
+        "culture",
+        "world",
+        "delhi",
+        "2016",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/world-culture-festival-2016",
+      "image": "/images/events/world_culture_festival_2016.jpg"
+    },
+    {
+      "id": "event-wcf-2011",
+      "title": "World Culture Festival 2011",
+      "description": "Global celebration of unity and diversity A celebration of global unity featuring cultural performances, meditations, and dialogues from around the world. 2.5 million attendees 150+ countries Cultural performances",
+      "category": "Event",
+      "tags": [
+        "festival",
+        "culture",
+        "world",
+        "2011",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/world-culture-festival-2011",
+      "image": "/images/events/world_culture_festival_2011.jpg"
+    },
+    {
+      "id": "event-wcf-2006",
+      "title": "World Culture Festival 2006",
+      "description": "The first World Culture Festival The inaugural World Culture Festival, bringing together people from around the world to celebrate peace, harmony, and cultural diversity. 1 million attendees 100+ countries Inaugural celebration",
+      "category": "Event",
+      "tags": [
+        "festival",
+        "culture",
+        "world",
+        "inaugural",
+        "2006",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/world-culture-festival-2006",
+      "image": "/images/events/wcf-2006-thumb.jpg"
+    },
+    {
+      "id": "event-guinness-yoga-2015",
+      "title": "Guinness World Record - Largest Yoga Session",
+      "description": "Guinness World Record for largest yoga session Created a Guinness World Record for the largest yoga session with over 35,000 participants practicing together in a single session. 35,985 participants Guinness World Record International Yoga Day Global recognition",
+      "category": "Event",
+      "tags": [
+        "guinness",
+        "record",
+        "yoga",
+        "achievement",
+        "2015",
+        "world",
+        "largest",
+        "session",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/guinness-yoga-2015",
+      "image": "/images/events/guinness_yoga_record.jpg"
+    },
+    {
+      "id": "event-iwc-2020",
+      "title": "International Women's Conference 2020",
+      "description": "Global conference for women leaders A global gathering of women leaders focusing on empowerment, leadership, and creating positive change in communities worldwide. 40,000+ participants 100+ countries Virtual and in-person Keynote speakers",
+      "category": "Event",
+      "tags": [
+        "conference",
+        "women",
+        "leadership",
+        "empowerment",
+        "iwc",
+        "2020",
+        "international",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/iwc-2020",
+      "image": "/images/events/iwc-2020-thumb.jpg"
+    },
+    {
+      "id": "event-glf-2019",
+      "title": "Global Leadership Forum 2019",
+      "description": "Global forum for leaders and change-makers A gathering of leaders from various fields to discuss global challenges and solutions, focusing on peace, sustainability, and human values. World leaders and dignitaries Panel discussions Networking sessions Action-oriented outcomes",
+      "category": "Event",
+      "tags": [
+        "forum",
+        "leadership",
+        "global",
+        "dialogue",
+        "2019",
+        "event",
+        "events",
+        "celebration",
+        "gurudev",
+        "sri sri ravi shankar",
+        "birthday",
+        "meditation",
+        "satsang",
+        "bangalore",
+        "ashram"
+      ],
+      "url": "/events/global-leadership-forum-2019",
+      "image": "/images/events/glf-2019-thumb.jpg"
+    }
+  ]
+}

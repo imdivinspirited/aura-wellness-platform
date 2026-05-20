@@ -1,0 +1,54 @@
+name: Deploy The AOLIC Bangalore
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install frontend deps
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci
+
+      - name: Verify backend (ESLint + route graph)
+        run: npm run verify:backend
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2 (docker compose)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/the-aolic-bangalore
+            git pull origin main
+            docker compose pull || true
+            docker compose build --pull
+            JWT_SECRET="${{ secrets.JWT_SECRET }}" OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" docker compose up -d --remove-orphans
+            docker image prune -f || true

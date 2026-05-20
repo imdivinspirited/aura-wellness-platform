@@ -1,0 +1,53 @@
+/** Extended resume pipeline — branding, export, collaboration hooks (pure helpers). */
+
+export const brandVoiceFormal = () => 'formal';
+export const brandVoiceFriendly = () => 'friendly';
+export const brandVoiceTechnical = () => 'technical';
+export const sectionOrderDefault = () =>
+  ['summary', 'experience', 'education', 'projects', 'skills', 'certs', 'languages', 'custom'] as const;
+export const mergeSectionOrder = <T extends string>(base: readonly T[], patch: T[]) => [...new Set([...patch, ...base])];
+export const priorityBoost = (hasMetric: boolean, hasLeadership: boolean) => (hasMetric ? 1 : 0) + (hasLeadership ? 0.5 : 0);
+export const redundancyScore = (a: string, b: string) => (a === b ? 1 : 0);
+export const bulletActionScore = (s: string) => (/^(led|built|owned|scaled|delivered|designed)/i.test(s) ? 1 : 0.4);
+export const summaryStarFormat = (situation: string, task: string, action: string, result: string) =>
+  [situation, task, action, result].filter(Boolean).join(' ');
+export const jobTargetLine = (role: string, domain: string) => `${role} in ${domain}`.trim();
+export const remotePreference = (v: 'remote' | 'hybrid' | 'onsite') => v;
+export const relocationFlag = (willing: boolean) => willing;
+export const clearanceLevel = (v: string) => v.slice(0, 32);
+export const portfolioPasswordHint = () => 'use env var in prod';
+export const piiRedactEmail = (s: string) => s.replace(/(^.).*(@)/, '$1***$2');
+export const piiRedactPhone = (s: string) => s.replace(/\d(?=\d{4})/g, '•');
+export const exportMarkdownTable = (rows: string[][]) => rows.map((r) => `| ${r.join(' | ')} |`).join('\n');
+export const exportLinkedInHeadlineMax = () => 220;
+export const exportTwitterBioMax = () => 160;
+export const versionSemver = (major: number, minor: number, patch: number) => `${major}.${minor}.${patch}`;
+export const diffHash = (a: string, b: string) => `${a.length}:${b.length}:${a.slice(0, 40)}`;
+export const snapshotId = () => `snap-${Date.now().toString(36)}`;
+export const collaborationLockHint = () => 'optimistic UI + ETag';
+export const commentThreadId = (id: string) => `thread-${id}`;
+export const reviewStatus = (s: 'draft' | 'review' | 'approved') => s;
+export const aiAssistTone = (t: 'neutral' | 'concise' | 'impact') => t;
+export const spellcheckLocale = (l: string) => l || 'en-US';
+export const grammarStrictness = (n: 0 | 1 | 2) => n;
+export const inclusiveLanguageScan = (s: string) => /\b(mankind|chairman)\b/i.test(s);
+export const biasCheckPlaceholder = () => 'human review required';
+export const salaryExpectationBand = (min: number, max: number, currency: string) => `${currency} ${min}–${max}`;
+export const noticePeriodWeeks = (w: number) => Math.min(24, Math.max(0, w));
+export const workAuthorization = (s: string) => s.slice(0, 120);
+export const visaSponsorshipNeeded = (v: boolean) => v;
+export const timezonePreference = (tz: string) => tz.slice(0, 64);
+export const calendarLinkPlaceholder = () => 'https://cal.com/…';
+export const qrVCardHint = () => 'optional QR on printed CV';
+export const watermarkText = (org: string) => `Confidential — ${org}`.slice(0, 80);
+export const barcodeEmployeeId = (id: string) => id.replace(/\W/g, '').slice(0, 24);
+export const archiveRetentionYears = (y: number) => Math.min(10, Math.max(1, y));
+export const gdprExportPack = () => ['resume.json', 'profile.json', 'activities.json'];
+export const auditLogEvent = (action: string, ts: number) => ({ action, ts });
+export const featureFlagResumeV2 = () => true;
+export const experimentBucket = (id: string) => id.charCodeAt(0) % 4;
+export const rateLimitBurst = () => 20;
+export const cdnCacheTtlSec = () => 3600;
+export const edgeRegionHint = () => 'auto';
+export const wasmParserHint = () => 'future: parse docx in browser';
+export const openapiTagResume = () => 'Resume';

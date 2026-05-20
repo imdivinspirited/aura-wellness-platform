@@ -1,0 +1,47 @@
+{
+  "name": "aolic-bangalore-api",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The AOLIC Bangalore — platform API (MongoDB, JWT, Argon2)",
+  "scripts": {
+    "verify:imports": "node scripts/verify-import-graph.mjs",
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src --ext js,ts,json --signal SIGTERM --legacy-watch src/server.js",
+    "migrate": "node scripts/run-migrations.js",
+    "test:root-route": "node scripts/verify-root-api.mjs",
+    "verify:root-live": "node scripts/verify-root-live.mjs",
+    "list-root": "node scripts/list-root-user.mjs",
+    "clear-root": "node scripts/clear-root-user.mjs",
+    "test:auth": "node ../scripts/verify-auth-login.mjs",
+    "test:smtp": "node scripts/test-smtp.mjs",
+    "test:email-verify": "node scripts/send-test-verification-email.mjs",
+    "reindex:search": "node scripts/reindex-site-search.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.19.1",
+    "@octokit/rest": "^22.0.1",
+    "argon2": "^0.41.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.23.0",
+    "nodemailer": "^8.0.5",
+    "otplib": "^12.0.1",
+    "pdfkit": "^0.18.0",
+    "socket.io": "^4.8.3",
+    "uuid": "^11.0.5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

@@ -1,0 +1,26 @@
+import { createHash } from 'crypto';
+import argon2 from 'argon2';
+
+/** Argon2id — recommended OWASP parameters (tune for your hardware under load). */
+const ARGON_OPTS = {
+  type: argon2.argon2id,
+  memoryCost: 19456,
+  timeCost: 2,
+  parallelism: 1,
+};
+
+export async function hashPassword(plain) {
+  return argon2.hash(plain, ARGON_OPTS);
+}
+
+export async function verifyPassword(hash, plain) {
+  try {
+    return await argon2.verify(hash, plain);
+  } catch {
+    return false;
+  }
+}
+
+export function sha256HexSync(buf) {
+  return createHash('sha256').update(buf).digest('hex');
+}

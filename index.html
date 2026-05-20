@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>The AOLIC Bangalore | Art of Living Bangalore Ashram — Meditation, Yoga & Wellness</title>
+    <meta name="title" content="The AOLIC Bangalore | Art of Living Bangalore Ashram — Meditation, Yoga & Wellness" />
+    <meta name="description" content="The AOLIC Bangalore — Art of Living Bangalore Ashram. Experience transformative yoga, meditation, and breathing programs. Inner peace and holistic well-being." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://artofliving.org/" />
+    <meta property="og:title" content="The AOLIC Bangalore | Art of Living Bangalore Ashram" />
+    <meta property="og:description" content="The AOLIC Bangalore — meditation, yoga, and wellness programs at Art of Living Bangalore Ashram." />
+    <meta property="og:image" content="/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://artofliving.org/" />
+    <meta property="twitter:title" content="The AOLIC Bangalore | Art of Living Bangalore Ashram" />
+    <meta property="twitter:description" content="The AOLIC Bangalore — meditation, yoga, and wellness at Art of Living Bangalore Ashram." />
+
+    <!-- Keywords -->
+    <meta name="keywords" content="AOLIC Bangalore, The AOLIC Bangalore, Art of Living, Bangalore Ashram, meditation, yoga, Sudarshan Kriya, wellness, Sri Sri Ravi Shankar, happiness program" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://artofliving.org/" />
+
+    <!-- Preconnect to Google Fonts & CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.gpteng.co" crossorigin />
+
+    <!-- Preload critical font files to break dependency chain -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Preload hero image to reduce LCP - responsive -->
+    <link rel="preload" href="/images/hero/hero_landing_ashram_mobile.webp" as="image" type="image/webp" fetchpriority="high" media="(max-width: 768px)" />
+    <link rel="preload" href="/images/hero/hero_landing_ashram.webp" as="image" type="image/webp" fetchpriority="high" media="(min-width: 769px)" />
+
+    <!-- Load fonts non-render-blocking via JS injection -->
+    <script>
+      requestAnimationFrame(function () {
+        var f1 = document.createElement('link');
+        f1.rel = 'stylesheet';
+        f1.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap';
+        document.head.appendChild(f1);
+        var f2 = document.createElement('link');
+        f2.rel = 'stylesheet';
+        f2.href =
+          'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap';
+        document.head.appendChild(f2);
+      });
+    </script>
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Critical: skip link hidden before app CSS loads (avoids visible “stuck” link) -->
+    <style>
+      .skip-link:not(:focus):not(:focus-visible) {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        clip-path: inset(50%) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+      .skip-link:focus,
+      .skip-link:focus-visible {
+        position: fixed !important;
+        left: 0.75rem !important;
+        top: 0.75rem !important;
+        z-index: 2147483647 !important;
+        width: auto !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0.75rem 1.25rem !important;
+        overflow: visible !important;
+        clip: auto !important;
+        clip-path: none !important;
+        white-space: normal !important;
+        background: #c9a961 !important;
+        color: #fdfdf8 !important;
+        font: 600 0.95rem system-ui, sans-serif !important;
+        text-decoration: none !important;
+        border-radius: 0 0 0.5rem 0 !important;
+        box-shadow: 0 4px 12px rgba(27, 75, 111, 0.15) !important;
+        outline: 2px solid #1b4b6f !important;
+        outline-offset: 2px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

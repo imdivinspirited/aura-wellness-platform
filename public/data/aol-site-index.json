@@ -1,0 +1,67 @@
+{
+  "generatedNote": "Snapshot for on-site assistant; merge with live DOM links in browser.",
+  "programs": [
+    {
+      "title": "SKY / Happiness Program",
+      "description": "Transformative breathing and meditation program including Sudarshan Kriya.",
+      "schedule": "Offered regularly at the ashram; see programs calendar.",
+      "location": "Art of Living Bangalore Ashram",
+      "fee": "Varies by batch; see registration.",
+      "link": "/programs/happiness-program",
+      "instructor": "Certified Art of Living teachers"
+    },
+    {
+      "title": "Sahaj Samadhi Meditation",
+      "description": "Effortless meditation technique for deep rest and clarity.",
+      "schedule": "Multiple batches; check listings.",
+      "location": "Bangalore Ashram & online options where available",
+      "fee": "See program page for current fees",
+      "link": "/programs/sahaj-samadhi",
+      "instructor": "Qualified meditation instructors"
+    },
+    {
+      "title": "Sri Sri Yoga",
+      "description": "Holistic yoga integrating postures, breath, and wisdom.",
+      "schedule": "Seasonal schedules published on the program page.",
+      "location": "Bangalore Ashram",
+      "fee": "See registration",
+      "link": "/programs/sri-sri-yoga",
+      "instructor": "Sri Sri Yoga teachers"
+    }
+  ],
+  "events": [
+    {
+      "title": "Maha Shivratri Celebrations 2026",
+      "description": "Night of meditation, devotion, and transformation with group meditations and discourses.",
+      "startDate": "2026-02-26T18:00:00+05:30",
+      "endDate": "2026-02-27T06:00:00+05:30",
+      "location": "Art of Living International Center, Bangalore (hybrid / online participation available)",
+      "fee": "Free and paid options may apply; see event page",
+      "link": "/events/maha-shivratri-2026",
+      "instructor": "Senior faculty & global webcast",
+      "status": "upcoming"
+    },
+    {
+      "title": "Gurudev Sri Sri Ravi Shankar's Birthday Celebration",
+      "description": "Special programs, meditations, and service honoring Gurudev's birthday.",
+      "startDate": "2026-05-13T06:00:00+05:30",
+      "endDate": "2026-05-13T23:59:59+05:30",
+      "location": "Global celebration — local ashram participation",
+      "fee": "Varies",
+      "link": "/events/gurudev-birthday-2026",
+      "instructor": "Ashram hosts & teachers",
+      "status": "upcoming"
+    }
+  ],
+  "pages": [
+    { "label": "Events", "link": "/events", "intent": "events" },
+    { "label": "Upcoming events", "link": "/events/upcoming", "intent": "events" },
+    { "label": "Ongoing events", "link": "/events/ongoing", "intent": "events" },
+    { "label": "Programs", "link": "/programs", "intent": "courses" },
+    { "label": "Contact", "link": "/connect/contact", "intent": "contact" },
+    { "label": "Seva & careers", "link": "/seva-careers", "intent": "volunteer" },
+    { "label": "Support", "link": "/connect/support", "intent": "contact" },
+    { "label": "Articles", "link": "/explore/articles", "intent": "general" },
+    { "label": "About the ashram", "link": "/explore/about", "intent": "general" }
+  ]
+}
