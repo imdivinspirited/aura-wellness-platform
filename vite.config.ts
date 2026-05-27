@@ -4,6 +4,11 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { startBackendInDev } from "./vite-start-backend-plugin";
 
+type DevProxy = {
+  on(event: "error", listener: (err: Error, req: unknown, res: unknown) => void): void;
+  on(event: "proxyReq", listener: (proxyReq: unknown, req: { method?: string; url?: string }) => void): void;
+};
+
 // Fallback Supabase credentials (publishable/anon keys - safe to include)
 const SUPABASE_DEFAULTS = {
   VITE_SUPABASE_URL: "https://wiodohcrgwvgncbvgokw.supabase.co",
@@ -27,15 +32,15 @@ export default defineConfig(({ mode }) => {
   }
 
   /** When the API is down or resets the connection, http-proxy often left the browser with an empty body — return JSON 502 instead. */
-  const configureDevProxy = (proxy: import("http-proxy").Server) => {
-    proxy.on("error", (err: Error, _req, res) => {
+  const configureDevProxy = (proxy: DevProxy) => {
+    proxy.on("error", (err, _req, res) => {
       console.error("[vite proxy]", err.message);
       const r = res as {
         headersSent?: boolean;
         writeHead?: (code: number, headers: Record<string, string>) => void;
         end?: (chunk?: string) => void;
       };
-      if (r && typeof r.writeHead === "function" && !r.headersSent) {
+        if (r && typeof r.writeHead === "function" && typeof r.end === "function" && !r.headersSent) {
         try {
           r.writeHead(502, { "Content-Type": "application/json; charset=utf-8" });
           r.end(
