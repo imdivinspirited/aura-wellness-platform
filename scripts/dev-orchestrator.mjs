@@ -158,7 +158,7 @@ async function ensureMongoReachableOrExit() {
     return true;
   }
   try {
-    await waitForPort(27017, '127.0.0.1', 120_000);
+    await waitForPort(27017, '127.0.0.1', 5_000);
     console.log('\x1b[32m[dev]\x1b[0m MongoDB reachable at 127.0.0.1:27017');
     return true;
   } catch {
