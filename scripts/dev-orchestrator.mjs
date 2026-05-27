@@ -155,17 +155,18 @@ async function startDockerDbIfPossible() {
 async function ensureMongoReachableOrExit() {
   if (backendUsesAtlas()) {
     console.log('\x1b[36m[dev]\x1b[0m backend/.env uses Atlas (mongodb+srv) — skipping localhost Mongo check.');
-    return;
+    return true;
   }
   try {
-    await waitForPort(27017, '127.0.0.1', 120_000);
+    await waitForPort(27017, '127.0.0.1', 5_000);
     console.log('\x1b[32m[dev]\x1b[0m MongoDB reachable at 127.0.0.1:27017');
+    return true;
   } catch {
-    console.error(
+    console.warn(
       '\x1b[31m[dev]\x1b[0m MongoDB not reachable at 127.0.0.1:27017.\n' +
-        'Start Docker Desktop (recommended) or set MONGODB_URI to Atlas in backend/.env, then re-run `npm run dev`.'
+        'Starting Vite without the local API. Backend-backed features will recover when MongoDB/API is available.'
     );
-    process.exit(1);
+    return false;
   }
 }
 
@@ -202,7 +203,7 @@ function spawnVite() {
     cwd: root,
     stdio: 'inherit',
     shell: process.platform === 'win32',
-    env: { ...process.env },
+    env: { ...process.env, VITE_SKIP_BACKEND_AUTOSTART: '1' },
   });
   return p;
 }
@@ -224,7 +225,7 @@ async function main() {
   ensureBackendEnvSecrets();
   await verifyBackendImportGraphOrExit();
   await startDockerDbIfPossible();
-  await ensureMongoReachableOrExit();
+  const canStartBackend = await ensureMongoReachableOrExit();
 
   let stopRequested = false;
   let backend = null;
@@ -278,8 +279,10 @@ async function main() {
     }
   };
 
-  await startBackendLoop(true);
-  if (stopRequested) return;
+  if (canStartBackend) {
+    await startBackendLoop(false);
+    if (stopRequested) return;
+  }
 
   // Start Vite after backend is up.
   console.log(`\x1b[36m[dev]\x1b[0m Starting Vite on http://localhost:${VITE_PORT} …\n`);

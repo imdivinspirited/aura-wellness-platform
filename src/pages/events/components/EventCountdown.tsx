@@ -19,7 +19,7 @@ function useRemainingMs(target: number) {
   }, [target]);
 
   useEffect(() => {
-    let id: ReturnType<typeof window.setInterval> | undefined;
+    let id: number | undefined;
 
     const tick = () => {
       setRemaining(Math.max(0, target - Date.now()));

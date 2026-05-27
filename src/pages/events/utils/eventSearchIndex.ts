@@ -4,7 +4,7 @@
  * via `fullBlob`; important facets stay weighted for ranking quality.
  */
 
-import Fuse from 'fuse.js';
+import Fuse, { type IFuseOptions } from 'fuse.js';
 import type { Event } from '@/pages/events/types';
 
 export interface EventSearchRecord {
@@ -38,7 +38,7 @@ export function collectDeepSearchText(value: unknown, depth = 0): string {
   if (depth > MAX_DEPTH) return '';
   if (value == null) return '';
   const t = typeof value;
-  if (t === 'string') return value;
+  if (typeof value === 'string') return value;
   if (t === 'number' || t === 'boolean') return String(value);
   if (Array.isArray(value)) {
     return value.map((v) => collectDeepSearchText(v, depth + 1)).filter(Boolean).join(' ');
@@ -105,7 +105,7 @@ export function buildEventSearchRecord(event: Event): EventSearchRecord {
   };
 }
 
-const FUSE_KEYS: Fuse.IFuseOptions<EventSearchRecord>['keys'] = [
+const FUSE_KEYS: IFuseOptions<EventSearchRecord>['keys'] = [
   { name: 'title', weight: 0.28 },
   { name: 'shortDescription', weight: 0.1 },
   { name: 'description', weight: 0.12 },
@@ -123,7 +123,7 @@ const FUSE_KEYS: Fuse.IFuseOptions<EventSearchRecord>['keys'] = [
   { name: 'fullBlob', weight: 0.1 },
 ];
 
-const fuseOptions: Fuse.IFuseOptions<EventSearchRecord> = {
+const fuseOptions: IFuseOptions<EventSearchRecord> = {
   keys: FUSE_KEYS,
   threshold: 0.38,
   ignoreLocation: true,

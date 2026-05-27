@@ -77,6 +77,19 @@ interface SearchModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
+type BrowserSpeechRecognition = {
+  lang: string;
+  interimResults: boolean;
+  continuous: boolean;
+  maxAlternatives: number;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+};
+
 const SITE_SEARCH_SERVER =
   import.meta.env.VITE_SITE_SEARCH_SERVER === 'true' || import.meta.env.VITE_SITE_SEARCH_SERVER === '1';
 /** Slightly longer debounce when Elasticsearch backs search — fewer cancelled in-flight requests. */
@@ -130,7 +143,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
   const [feedbackTick, setFeedbackTick] = useState(0);
   const [listening, setListening] = useState(false);
   const [voiceInterim, setVoiceInterim] = useState('');
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   /** Synced immediately on start/stop — avoids double `start()` before React re-renders `listening`. */
   const voiceActiveRef = useRef(false);
   const [safeOn, setSafeOn] = useState(() =>
@@ -470,8 +483,8 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
       return;
     }
     const w = window as unknown as {
-      SpeechRecognition?: new () => SpeechRecognition;
-      webkitSpeechRecognition?: new () => SpeechRecognition;
+      SpeechRecognition?: new () => BrowserSpeechRecognition;
+      webkitSpeechRecognition?: new () => BrowserSpeechRecognition;
     };
     const SR = w.SpeechRecognition ?? w.webkitSpeechRecognition;
     if (!SR) return;
@@ -1177,7 +1190,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
                           <button
                             type="button"
                             className="w-full rounded-lg px-2 py-1.5 text-left text-xs text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
-                            onClick={() => handleResultClick({ ...rel, score: rel.score })}
+                            onClick={() => handleResultClick(rel)}
                           >
                             <span className="font-medium text-foreground">{rel.title}</span>
                             <span className="mx-1.5 text-muted-foreground/70">·</span>

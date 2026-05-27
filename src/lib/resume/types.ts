@@ -6,6 +6,7 @@ export interface VisualScale2D {
   y: number;
 }
 
+import type { CanvasResizeAnchor } from './canvasResizeAnchor';
 export type { CanvasResizeAnchor } from './canvasResizeAnchor';
 
 export interface ResumeSocialLinks {

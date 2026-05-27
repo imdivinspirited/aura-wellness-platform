@@ -184,6 +184,11 @@ export function startBackendInDev(): Plugin {
     name: "start-backend-in-dev",
     apply: "serve",
     async configureServer(server) {
+      if (process.env.VITE_SKIP_BACKEND_AUTOSTART === "1") {
+        console.log("\x1b[33m[vite]\x1b[0m Backend autostart skipped for this dev session.\n");
+        return;
+      }
+
       const root = path.dirname(fileURLToPath(import.meta.url));
       const backendDir = path.join(root, "backend");
 
