@@ -11,13 +11,13 @@ import { useTranslation } from '@/lib/i18n';
 import { translateNavLabel } from '@/lib/navI18n';
 
 const menuItems = [
-  { icon: BookOpen, labelKey: 'nav.programs', label: 'Programs', path: '/programs' },
-  { icon: Heart, labelKey: 'nav.services', label: 'Services', path: '/services' },
-  { icon: Globe, labelKey: 'nav.international', label: 'International', path: '/international' },
-  { icon: Calendar, labelKey: 'nav.events', label: 'Events', path: '/events' },
-  { icon: Compass, labelKey: 'nav.explore', label: 'Explore', path: '/explore' },
-  { icon: Users, labelKey: 'nav.connect', label: 'Connect', path: '/connect' },
-  { icon: Briefcase, labelKey: 'nav.sevaCareers', label: 'Seva', path: '/seva-careers' },
+  { id: 'programs', icon: BookOpen, labelKey: 'nav.programs', label: 'Programs', path: '/programs' },
+  { id: 'services', icon: Heart, labelKey: 'nav.services', label: 'Services', path: '/services' },
+  { id: 'international', icon: Globe, labelKey: 'nav.international', label: 'International', path: '/international' },
+  { id: 'events', icon: Calendar, labelKey: 'nav.events', label: 'Events', path: '/events' },
+  { id: 'explore', icon: Compass, labelKey: 'nav.explore', label: 'Explore', path: '/explore' },
+  { id: 'connect', icon: Users, labelKey: 'nav.connect', label: 'Connect', path: '/connect' },
+  { id: 'seva-careers', icon: Briefcase, labelKey: 'nav.sevaCareers', label: 'Seva', path: '/seva-careers' },
 ];
 
 function isActivePath(path: string, currentPath: string): boolean {
