@@ -15,12 +15,15 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useLogoHomeNavigation } from '@/hooks/useLogoHomeNavigation';
 import { AolicLogo } from '@/components/branding/AolicLogo';
 
-const SPRING_SNAPPY = { type: 'spring' as const, stiffness: 460, damping: 34, mass: 0.78 };
-const SPRING_SOFT = { type: 'spring' as const, stiffness: 380, damping: 32, mass: 0.85 };
-const STAGGER_MS = 0.042;
-const ASIDE_SPRING = { type: 'spring' as const, stiffness: 280, damping: 36, mass: 0.65 };
+/* -------------------------------------------------------------------------- */
+/*  Premium motion curves                                                     */
+/* -------------------------------------------------------------------------- */
+const SPRING_SNAPPY = { type: 'spring' as const, stiffness: 500, damping: 36, mass: 0.7 };
+const SPRING_SOFT = { type: 'spring' as const, stiffness: 360, damping: 34, mass: 0.85 };
+const STAGGER_MS = 0.038;
+const ASIDE_SPRING = { type: 'spring' as const, stiffness: 320, damping: 38, mass: 0.62 };
 
-/** Micro-film grain — makes frosted glass feel physical (very subtle). */
+/** Micro-film grain — adds tactile depth to the frosted surface. */
 const GLASS_NOISE_DATA =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.6'/%3E%3C/svg%3E\")";
 
@@ -62,24 +65,25 @@ const MainNavItem = memo(function MainNavItem({ item, isCollapsed, isActive, ind
     <Link
       to={item.href || '#'}
       onClick={handleClick}
+      aria-current={isActive ? 'page' : undefined}
       className={cn(
-        'group relative block overflow-visible rounded-2xl border border-transparent',
-        'transition-[border-color,box-shadow] duration-300',
-        'hover:border-zinc-500/25 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] dark:hover:border-white/10',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-800/50 dark:focus-visible:ring-white/20 dark:focus-visible:ring-offset-zinc-950',
+        'group relative block overflow-visible rounded-xl border border-transparent',
+        'transition-[border-color,box-shadow,background-color] duration-300 ease-out',
+        'hover:border-white/[0.06]',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950/60',
       )}
     >
       <motion.div
         whileTap={reduceMotion ? undefined : { scale: 0.985 }}
-        transition={{ type: 'spring', stiffness: 520, damping: 38 }}
+        transition={{ type: 'spring', stiffness: 540, damping: 40 }}
         className="relative"
       >
         {/* Hover wash — only when not active */}
         <div
           className={cn(
-            'pointer-events-none absolute inset-0 z-[0] rounded-2xl transition-all duration-300',
+            'pointer-events-none absolute inset-0 z-[0] rounded-xl transition-opacity duration-300 ease-out',
             !isActive &&
-              'opacity-0 group-hover:opacity-100 group-hover:bg-gradient-to-br group-hover:from-zinc-500/15 group-hover:via-zinc-600/10 group-hover:to-zinc-700/8 group-hover:backdrop-blur-2xl group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_20px_-8px_rgba(0,0,0,0.12)] dark:group-hover:from-zinc-800/40 dark:group-hover:via-zinc-900/55 dark:group-hover:to-black/40 dark:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_6px_28px_-6px_rgba(0,0,0,0.5)]',
+              'opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/[0.06] via-white/[0.025] to-transparent shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]',
           )}
           aria-hidden
         />
@@ -89,22 +93,21 @@ const MainNavItem = memo(function MainNavItem({ item, isCollapsed, isActive, ind
           <motion.div
             layoutId="sidebarNavHighlight"
             className={cn(
-              'pointer-events-none absolute inset-0 z-[1] rounded-2xl backdrop-blur-2xl dark:backdrop-blur-3xl',
-              'bg-gradient-to-br from-zinc-300/50 via-zinc-400/25 to-zinc-500/15',
-              'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25),inset_0_0_0_1px_rgba(255,255,255,0.15),0_8px_28px_-12px_rgba(0,0,0,0.15)]',
-              'dark:from-zinc-800/80 dark:via-zinc-900/75 dark:to-black/60',
-              'dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),inset_0_0_0_1px_rgba(255,255,255,0.05),inset_0_-12px_20px_-8px_rgba(0,0,0,0.5),0_12px_40px_-14px_rgba(0,0,0,0.6)]',
+              'pointer-events-none absolute inset-0 z-[1] rounded-xl',
+              'bg-gradient-to-br from-indigo-500/[0.18] via-violet-500/[0.10] to-sky-500/[0.08]',
+              'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),inset_0_0_0_1px_rgba(255,255,255,0.06),0_10px_30px_-14px_rgba(79,70,229,0.45)]',
+              'backdrop-blur-xl',
             )}
             initial={false}
             transition={layoutTransition}
           />
         )}
 
-        {/* Active left rail — expanded only (neutral, no gold) */}
+        {/* Active left rail — premium indigo glow */}
         {isActive && !isCollapsed && (
           <motion.div
             layoutId="sidebarNavRail"
-            className="pointer-events-none absolute left-0 top-1/2 z-[3] h-[58%] w-[3px] -translate-y-1/2 rounded-full bg-zinc-600 shadow-[0_0_12px_rgba(0,0,0,0.35)] dark:bg-zinc-400 dark:shadow-[0_0_14px_rgba(0,0,0,0.45)]"
+            className="pointer-events-none absolute left-0 top-1/2 z-[3] h-[60%] w-[2.5px] -translate-y-1/2 rounded-full bg-gradient-to-b from-indigo-300 via-indigo-400 to-violet-500 shadow-[0_0_12px_rgba(129,140,248,0.65)]"
             initial={false}
             transition={layoutTransition}
           />
@@ -112,7 +115,7 @@ const MainNavItem = memo(function MainNavItem({ item, isCollapsed, isActive, ind
 
         <div
           className={cn(
-            'relative z-[2] flex items-center gap-3 px-3 py-2.5 text-[0.8125rem] font-semibold tracking-wide',
+            'relative z-[2] flex items-center gap-3 px-3 py-2.5 text-[0.8125rem] font-medium tracking-wide',
             isActive && !isCollapsed && 'pl-[15px]',
             isCollapsed && 'justify-center px-2 py-2.5',
           )}
@@ -124,19 +127,25 @@ const MainNavItem = memo(function MainNavItem({ item, isCollapsed, isActive, ind
                 reduceMotion
                   ? undefined
                   : {
-                      scale: isActive ? 1.06 : 1,
+                      scale: isActive ? 1.08 : 1,
                     }
               }
               transition={springTransition}
             >
+              {isActive && !reduceMotion && (
+                <span
+                  className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-indigo-400/25 blur-md"
+                  aria-hidden
+                />
+              )}
               <Icon
                 className={cn(
                   'h-[1.2rem] w-[1.2rem] transition-colors duration-200',
                   isActive
-                    ? 'text-zinc-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)] dark:text-zinc-50 dark:drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]'
-                    : 'text-zinc-400 group-hover:text-zinc-200 dark:text-zinc-500 dark:group-hover:text-zinc-200',
+                    ? 'text-white drop-shadow-[0_1px_4px_rgba(129,140,248,0.55)]'
+                    : 'text-slate-400/90 group-hover:text-slate-100',
                 )}
-                strokeWidth={isActive ? 2.45 : 2}
+                strokeWidth={isActive ? 2.4 : 1.9}
                 aria-hidden
               />
             </motion.span>
@@ -148,8 +157,8 @@ const MainNavItem = memo(function MainNavItem({ item, isCollapsed, isActive, ind
                 className={cn(
                   'min-w-0 flex-1 truncate transition-colors duration-200',
                   isActive
-                    ? 'text-zinc-50 dark:text-zinc-50'
-                    : 'text-zinc-400 group-hover:text-zinc-200 dark:text-zinc-500 dark:group-hover:text-zinc-200',
+                    ? 'text-white'
+                    : 'text-slate-400/90 group-hover:text-slate-100',
                 )}
               >
                 {label}
@@ -159,8 +168,8 @@ const MainNavItem = memo(function MainNavItem({ item, isCollapsed, isActive, ind
                   className={cn(
                     'ml-auto h-5 shrink-0 border-0 text-[10px] font-bold tracking-wider',
                     isActive
-                      ? 'bg-zinc-600/50 text-zinc-100 shadow-sm dark:bg-zinc-700/60 dark:text-zinc-100'
-                      : 'bg-zinc-700/25 text-zinc-400 group-hover:bg-zinc-600/35 group-hover:text-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-500 dark:group-hover:bg-zinc-700/45 dark:group-hover:text-zinc-300',
+                      ? 'bg-indigo-400/25 text-indigo-50 shadow-[inset_0_0_0_1px_rgba(165,180,252,0.25)]'
+                      : 'bg-white/[0.06] text-slate-400 group-hover:bg-white/[0.10] group-hover:text-slate-100',
                   )}
                 >
                   {item.badge}
@@ -175,7 +184,7 @@ const MainNavItem = memo(function MainNavItem({ item, isCollapsed, isActive, ind
 
   const staggered = (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0, x: -14 }}
+      initial={reduceMotion ? false : { opacity: 0, x: -12 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{
         delay: reduceMotion ? 0 : index * STAGGER_MS,
@@ -189,8 +198,8 @@ const MainNavItem = memo(function MainNavItem({ item, isCollapsed, isActive, ind
           <TooltipTrigger asChild>{linkBody}</TooltipTrigger>
           <TooltipContent
             side="right"
-            sideOffset={10}
-            className="border border-zinc-400/35 bg-gradient-to-br from-zinc-600/35 to-zinc-700/25 px-3 py-2 text-sm font-semibold text-zinc-100 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.35),inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-2xl backdrop-saturate-100 dark:border-white/10 dark:from-zinc-950/98 dark:via-zinc-950/92 dark:to-black/85 dark:text-zinc-200 dark:shadow-[0_16px_48px_-12px_rgba(0,0,0,0.7),inset_0_1px_0_0_rgba(255,255,255,0.06)] dark:backdrop-blur-3xl"
+            sideOffset={12}
+            className="border border-white/10 bg-slate-950/95 px-3 py-1.5 text-xs font-semibold tracking-wide text-slate-100 shadow-[0_16px_48px_-12px_rgba(0,0,0,0.7),inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-2xl"
           >
             {label}
           </TooltipContent>
@@ -223,64 +232,52 @@ export const Sidebar = () => {
     <motion.aside
       initial={false}
       animate={{ width: isCollapsed ? 72 : 260 }}
-      transition={reduceMotion ? { duration: 0.22 } : ASIDE_SPRING}
+      transition={reduceMotion ? { duration: 0.2 } : ASIDE_SPRING}
+      aria-label="Primary"
       className={cn(
         'fixed left-0 top-0 z-40 flex h-screen flex-col overflow-hidden isolate',
-        /* Low white: dark-smoke (light) + near-black glass (dark) — no bright top wash */
-        'border-r border-zinc-500/25 bg-gradient-to-b from-zinc-600/30 via-zinc-700/22 to-zinc-800/28',
-        'backdrop-blur-[48px] backdrop-saturate-110',
-        'shadow-[12px_0_80px_-28px_rgba(0,0,0,0.28),inset_0_0_0_1px_rgba(255,255,255,0.1),inset_1px_0_0_rgba(255,255,255,0.06)]',
-        'dark:border-white/[0.08] dark:from-black/82 dark:via-zinc-950/90 dark:to-black/78',
-        'dark:backdrop-blur-[56px] dark:backdrop-saturate-95',
-        'dark:shadow-[16px_0_100px_-32px_rgba(0,0,0,0.82),8px_0_40px_-12px_rgba(0,0,0,0.55),inset_0_0_0_1px_rgba(255,255,255,0.06),inset_1px_0_0_rgba(255,255,255,0.04),inset_-1px_0_24px_-8px_rgba(0,0,0,0.4)]',
-        'will-change-[width]',
+        /* Luxury deep-indigo glass — works in both light and dark mode */
+        'border-r border-white/[0.06]',
+        'bg-[linear-gradient(180deg,rgba(15,17,32,0.92)_0%,rgba(10,12,24,0.94)_55%,rgba(6,8,18,0.96)_100%)]',
+        'backdrop-blur-2xl backdrop-saturate-150',
+        'shadow-[12px_0_60px_-24px_rgba(0,0,0,0.6),inset_-1px_0_0_0_rgba(255,255,255,0.04),inset_1px_0_0_0_rgba(255,255,255,0.05)]',
+        'will-change-[width] [transform:translateZ(0)]',
       )}
     >
+      {/* Top accent glow — premium signature */}
+      <div
+        className="pointer-events-none absolute -top-24 left-1/2 z-[1] h-48 w-[120%] -translate-x-1/2 rounded-[100%] bg-[radial-gradient(closest-side,rgba(99,102,241,0.22),transparent_70%)] opacity-90"
+        aria-hidden
+      />
+
       {/* Film grain — physical glass texture */}
       <div
-        className="pointer-events-none absolute inset-0 z-[3] opacity-[0.055] mix-blend-overlay dark:opacity-[0.09] dark:mix-blend-soft-light"
+        className="pointer-events-none absolute inset-0 z-[3] opacity-[0.05] mix-blend-overlay"
         style={{ backgroundImage: GLASS_NOISE_DATA, backgroundRepeat: 'repeat' }}
         aria-hidden
       />
 
-      {/* Light: subtle depth from bottom/sides only — no white top blob */}
+      {/* Inner vignette — deepens edges */}
       <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(90%_70%_at_50%_110%,rgba(0,0,0,0.12)_0%,transparent_50%),radial-gradient(70%_50%_at_0%_50%,rgba(0,0,0,0.06)_0%,transparent_45%)] opacity-90 dark:hidden"
-        aria-hidden
-      />
-      {/* Dark: corners + bottom weight only; top stays dark */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[1] hidden bg-[radial-gradient(110%_70%_at_50%_105%,rgba(0,0,0,0.65)_0%,transparent_55%),radial-gradient(85%_55%_at_0%_100%,rgba(0,0,0,0.6)_0%,transparent_50%),radial-gradient(80%_50%_at_100%_100%,rgba(0,0,0,0.55)_0%,transparent_48%)] dark:block"
+        className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,0.55)_100%)] opacity-70"
         aria-hidden
       />
 
-      {/* Inner vignette — dark: deepens edges */}
+      {/* Right edge — refined rim light */}
       <div
-        className="pointer-events-none absolute inset-0 z-[2] hidden bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.55)_100%)] opacity-70 dark:block"
-        aria-hidden
-      />
-
-      {/* Bare specular — very dim, no white band at top */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-b from-transparent via-transparent to-zinc-500/5 opacity-80 dark:via-white/[0.02] dark:to-transparent dark:opacity-100"
-        aria-hidden
-      />
-
-      {/* Right edge — faint rim */}
-      <div
-        className="pointer-events-none absolute inset-y-0 right-0 z-[5] w-px bg-gradient-to-b from-zinc-400/30 via-zinc-500/20 to-zinc-700/35 opacity-80 dark:from-zinc-600/40 dark:via-zinc-700/25 dark:to-black/60 dark:opacity-90"
+        className="pointer-events-none absolute inset-y-0 right-0 z-[5] w-px bg-gradient-to-b from-white/[0.08] via-indigo-400/15 to-transparent"
         aria-hidden
       />
 
       {/* Bottom depth fade */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-36 bg-gradient-to-t from-black/[0.05] to-transparent dark:h-44 dark:from-black/65 dark:via-black/25"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-44 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
         aria-hidden
       />
 
-      {/* Top: hairline only — no glow / no white wash */}
+      {/* Top hairline */}
       <div
-        className="pointer-events-none absolute left-4 right-4 top-0 z-[6] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-60 dark:via-white/8 dark:opacity-80"
+        className="pointer-events-none absolute left-4 right-4 top-0 z-[6] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
         aria-hidden
       />
 
@@ -292,6 +289,7 @@ export const Sidebar = () => {
         }}
         role="button"
         tabIndex={0}
+        aria-label="Go to home"
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -299,28 +297,29 @@ export const Sidebar = () => {
             goHomeViaLogo();
           }
         }}
-        whileHover={reduceMotion ? undefined : { scale: 1.01 }}
+        whileHover={reduceMotion ? undefined : { scale: 1.005 }}
         whileTap={reduceMotion ? undefined : { scale: 0.995 }}
-        transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+        transition={{ type: 'spring', stiffness: 420, damping: 30 }}
         className={cn(
-          'relative z-[1] flex cursor-pointer select-none items-center gap-3 border-b border-zinc-500/20 px-4 py-5',
-          'bg-gradient-to-b from-zinc-700/25 via-zinc-800/15 to-transparent backdrop-blur-xl',
-          'shadow-[inset_0_-1px_0_0_rgba(0,0,0,0.15),inset_0_1px_0_0_rgba(255,255,255,0.06)]',
-          'transition-all duration-300 hover:from-zinc-600/30 hover:via-zinc-700/18',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-800/40 dark:focus-visible:ring-white/15 dark:focus-visible:ring-offset-zinc-950',
-          'dark:border-white/[0.08] dark:from-zinc-950/80 dark:via-black/50 dark:to-black/35 dark:backdrop-blur-2xl',
-          'dark:shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.05),inset_0_1px_0_0_rgba(255,255,255,0.04),0_12px_40px_-20px_rgba(0,0,0,0.5)]',
+          'relative z-[4] flex cursor-pointer select-none items-center gap-3 border-b border-white/[0.06] px-4 py-5',
+          'bg-gradient-to-b from-white/[0.03] to-transparent',
+          'transition-colors duration-300 hover:from-white/[0.05]',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950/60',
           isCollapsed && 'justify-center px-2 py-4',
         )}
       >
         <motion.div
           className="relative shrink-0"
-          whileHover={reduceMotion ? undefined : { scale: 1.03 }}
+          whileHover={reduceMotion ? undefined : { scale: 1.04 }}
           transition={{ type: 'spring', stiffness: 400, damping: 24 }}
         >
+          <span
+            className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-indigo-400/20 blur-lg"
+            aria-hidden
+          />
           <AolicLogo
             alt="Bangalore Ashram"
-            className="h-10 w-auto object-contain drop-shadow-md"
+            className="h-10 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]"
             style={{ minWidth: 40 }}
           />
         </motion.div>
@@ -333,10 +332,10 @@ export const Sidebar = () => {
             transition={{ type: 'spring', stiffness: 320, damping: 28, delay: 0.05 }}
             className="min-w-0"
           >
-            <h1 className="font-display text-[1.05rem] font-semibold leading-snug tracking-tight text-zinc-100 dark:text-zinc-50">
+            <h1 className="font-display text-[1.05rem] font-semibold leading-snug tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
               Bangalore Ashram
             </h1>
-            <p className="mt-1 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-500">
+            <p className="mt-1 truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
               The Art of Living International Centre
             </p>
           </motion.div>
@@ -344,7 +343,7 @@ export const Sidebar = () => {
       </motion.div>
 
       {/* -------- NAVIGATION -------- */}
-      <ScrollArea className="relative z-[1] min-h-0 flex-1 scroll-smooth px-3 py-4 [scrollbar-width:thin] [scrollbar-color:rgba(63,63,70,0.25)_transparent] dark:[scrollbar-color:rgba(255,255,255,0.12)_transparent]">
+      <ScrollArea className="relative z-[4] min-h-0 flex-1 scroll-smooth px-3 py-4 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.10)_transparent]">
         <LayoutGroup id="sidebar-nav">
           <nav className="flex flex-col gap-1" aria-label="Primary application menu">
             {navigationItems.map((item, index) => (
@@ -361,24 +360,26 @@ export const Sidebar = () => {
       </ScrollArea>
 
       {/* -------- COLLAPSE -------- */}
-      <div className="relative z-[1] border-t border-zinc-600/25 bg-gradient-to-t from-black/20 via-zinc-800/15 to-transparent p-3 backdrop-blur-2xl dark:border-white/[0.08] dark:from-black/60 dark:via-zinc-950/45 dark:to-transparent dark:backdrop-blur-3xl">
+      <div className="relative z-[4] border-t border-white/[0.06] bg-gradient-to-t from-black/40 via-black/10 to-transparent p-3 backdrop-blur-xl">
         <motion.div whileTap={reduceMotion ? undefined : { scale: 0.98 }}>
           <Button
             variant="ghost"
             onClick={toggleCollapsed}
+            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-pressed={isCollapsed}
             className={cn(
-              'group/collapse h-11 w-full justify-center rounded-2xl border border-zinc-500/30',
-              'bg-gradient-to-b from-zinc-600/25 to-zinc-800/30 text-zinc-200 backdrop-blur-xl dark:text-zinc-400',
-              'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_20px_-8px_rgba(0,0,0,0.2)] transition-all duration-200',
-              'hover:border-zinc-400/35 hover:from-zinc-500/35 hover:to-zinc-700/35 hover:text-zinc-50 hover:shadow-lg dark:hover:text-zinc-200',
-              'focus-visible:ring-2 focus-visible:ring-zinc-500/40 dark:focus-visible:ring-white/15',
-              'dark:border-white/12 dark:from-zinc-900/70 dark:to-black/55 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_8px_32px_-8px_rgba(0,0,0,0.55)] dark:hover:from-zinc-800/50 dark:hover:to-black/50',
+              'group/collapse h-11 w-full justify-center rounded-xl border border-white/[0.08]',
+              'bg-white/[0.03] text-slate-300 backdrop-blur-xl',
+              'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_4px_20px_-8px_rgba(0,0,0,0.45)]',
+              'transition-all duration-200 ease-out',
+              'hover:border-indigo-400/30 hover:bg-white/[0.06] hover:text-white hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_8px_28px_-8px_rgba(79,70,229,0.45)]',
+              'focus-visible:ring-2 focus-visible:ring-indigo-400/50',
               !isCollapsed && 'justify-start px-3',
             )}
           >
             <motion.div
               animate={{ rotate: isCollapsed ? 0 : 180 }}
-              transition={reduceMotion ? { duration: 0.2 } : { type: 'spring', stiffness: 260, damping: 22 }}
+              transition={reduceMotion ? { duration: 0.2 } : { type: 'spring', stiffness: 280, damping: 24 }}
             >
               <ChevronLeft className="h-4 w-4 transition-transform group-hover/collapse:translate-x-[-1px]" strokeWidth={2.25} />
             </motion.div>
