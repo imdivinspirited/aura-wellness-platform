@@ -24,7 +24,7 @@ export function NotificationBell() {
       try {
         const res = await getNotifications();
         if (cancelled || !res?.success || !res.data) return;
-        const rows = (res.data.notifications as Record<string, unknown>[]).map(mapServerNotification);
+        const rows = (res.data.notifications as unknown as Record<string, unknown>[]).map(mapServerNotification);
         replaceFromServer(rows, res.data.unreadCount);
       } catch {
         /* offline */

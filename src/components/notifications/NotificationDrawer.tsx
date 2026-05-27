@@ -240,7 +240,7 @@ export function NotificationDrawer({ open, onOpenChange }: NotificationDrawerPro
                         await markAllReadApi();
                         const res = await getNotifications();
                         if (res.success && res.data) {
-                          const rows = (res.data.notifications as Record<string, unknown>[]).map(
+                          const rows = (res.data.notifications as unknown as Record<string, unknown>[]).map(
                             mapServerNotification
                           );
                           replaceFromServer(rows, res.data.unreadCount);

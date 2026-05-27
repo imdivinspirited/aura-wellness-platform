@@ -160,7 +160,7 @@ export const withVisibility = (r: ResumeDocumentV1, key: keyof ResumeDocumentV1[
 
 export const toggleAllVisibility = (r: ResumeDocumentV1, on: boolean): ResumeDocumentV1 => ({
   ...r,
-  visibility: Object.fromEntries(Object.keys(r.visibility).map((k) => [k, on])) as ResumeDocumentV1['visibility'],
+  visibility: Object.fromEntries(Object.keys(r.visibility).map((k) => [k, on])) as unknown as ResumeDocumentV1['visibility'],
 });
 
 export const isResumeEmpty = (r: ResumeDocumentV1) => totalWordCount(r) < 12 && countFilledSections(r) <= 1;

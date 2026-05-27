@@ -56,8 +56,10 @@ export type TranslationKey =
   | string; // Allow any string key for dynamic content
 
 // Translation structure
+type TranslationValue = string | Translations | TranslationValue[];
+
 interface Translations {
-  [key: string]: string | Translations;
+  [key: string]: TranslationValue;
 }
 
 // English translations (default/base)
