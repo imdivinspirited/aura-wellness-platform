@@ -20,40 +20,44 @@ async function generateEmbedding(text: string): Promise<number[] | null> {
   const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
   if (!LOVABLE_API_KEY) return null;
 
-  try {
-    // Use the chat completions API to generate a pseudo-embedding
-    // by asking the model to represent the text as a normalized vector
-    const cleanText = text.slice(0, 4000).replace(/\s+/g, " ").trim();
-    if (!cleanText) return null;
-
-    const resp = await fetch("https://ai.gateway.lovable.dev/v1/embeddings", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "text-embedding-3-small",
-        input: cleanText,
-        dimensions: 768,
-      }),
-    });
-
-    if (!resp.ok) {
-      console.warn(`[embedding] API error: ${resp.status}`);
-      return null;
-    }
-
-    const data = await resp.json();
-    const embedding = data?.data?.[0]?.embedding;
-    if (Array.isArray(embedding) && embedding.length === 768) {
-      return embedding;
-    }
-    return null;
-  } catch (e) {
-    console.warn("[embedding] Generation failed:", e instanceof Error ? e.message : e);
-    return null;
-  }
+  // DISABLED: AI Gateway embeddings calls are temporarily disabled.
+  // To re-enable, uncomment the block below. Model name is already corrected
+  // with the required `openai/` prefix so it will work on uncomment.
+  return null;
+  // try {
+  //   // Use the chat completions API to generate a pseudo-embedding
+  //   // by asking the model to represent the text as a normalized vector
+  //   const cleanText = text.slice(0, 4000).replace(/\s+/g, " ").trim();
+  //   if (!cleanText) return null;
+  //
+  //   const resp = await fetch("https://ai.gateway.lovable.dev/v1/embeddings", {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${LOVABLE_API_KEY}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       model: "openai/text-embedding-3-small",
+  //       input: cleanText,
+  //       dimensions: 768,
+  //     }),
+  //   });
+  //
+  //   if (!resp.ok) {
+  //     console.warn(`[embedding] API error: ${resp.status}`);
+  //     return null;
+  //   }
+  //
+  //   const data = await resp.json();
+  //   const embedding = data?.data?.[0]?.embedding;
+  //   if (Array.isArray(embedding) && embedding.length === 768) {
+  //     return embedding;
+  //   }
+  //   return null;
+  // } catch (e) {
+  //   console.warn("[embedding] Generation failed:", e instanceof Error ? e.message : e);
+  //   return null;
+  // }
 }
 
 function buildEmbeddingText(item: Record<string, unknown>): string {
