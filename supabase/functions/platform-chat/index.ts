@@ -50,31 +50,35 @@ function stripConversational(text: string): string {
 }
 
 
-async function getQueryEmbedding(text: string): Promise<number[] | null> {
-  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-  if (!LOVABLE_API_KEY) return null;
-
-  try {
-    const resp = await fetch("https://ai.gateway.lovable.dev/v1/embeddings", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "text-embedding-3-small",
-        input: text.slice(0, 2000),
-        dimensions: 768,
-      }),
-    });
-
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    const embedding = data?.data?.[0]?.embedding;
-    return Array.isArray(embedding) && embedding.length === 768 ? embedding : null;
-  } catch {
-    return null;
-  }
+async function getQueryEmbedding(_text: string): Promise<number[] | null> {
+  // DISABLED: AI Gateway embeddings calls are temporarily disabled.
+  // To re-enable, uncomment the block below. Model name is already corrected
+  // with the required `openai/` prefix so it will work on uncomment.
+  return null;
+  // const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+  // if (!LOVABLE_API_KEY) return null;
+  //
+  // try {
+  //   const resp = await fetch("https://ai.gateway.lovable.dev/v1/embeddings", {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${LOVABLE_API_KEY}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       model: "openai/text-embedding-3-small",
+  //       input: _text.slice(0, 2000),
+  //       dimensions: 768,
+  //     }),
+  //   });
+  //
+  //   if (!resp.ok) return null;
+  //   const data = await resp.json();
+  //   const embedding = data?.data?.[0]?.embedding;
+  //   return Array.isArray(embedding) && embedding.length === 768 ? embedding : null;
+  // } catch {
+  //   return null;
+  // }
 }
 
 /** Prefix SSE stream so the client can show citations (sources) immediately. */
